@@ -57,20 +57,91 @@ section:nth-of-type(1){
 .blog-card {
   width: 100%;
   padding: 1.5rem;
+
+  
+  
 }
 
-.blog-img {
-  background-image: url(../img/film-tape.jpg);
+.blog-img-1{
+  background-image: url(../img/blog1.jpg);
   background-repeat: no-repeat;
   background-size: cover; 
+  border-radius: 10px 10px 10px 10px;
   /* background-color: rgb(88, 88, 88); */
   height: 18rem;
   width: 100%;
 }
 
+.blog-img-2{
+
+  background-image: url(../img/blog2.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; 
+  border-radius: 10px 10px 10px 10px;
+  height: 18rem;
+  width: 100%;
+}
+
+.blog-img-3{
+
+  background-image: url(../img/blog3.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; 
+  border-radius: 10px 10px 10px 10px;
+  height: 18rem;
+  width: 100%;
+}
+
+.blog-img-4{
+
+  background-image: url(../img/blog4.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; 
+  border-radius: 10px 10px 10px 10px;
+  height: 18rem;
+  width: 100%;
+}
+
+
+.blog-img-5{
+
+  background-image: url(../img/blog5.png);
+  background-repeat: no-repeat;
+  background-size: cover; 
+  border-radius: 10px 10px 10px 10px;
+  height: 18rem;
+  width: 100%;
+}
+
+.blog-img-6{
+
+  background-image: url(../img/blog6.jpg);
+  background-repeat: no-repeat;
+  background-size: cover; 
+  border-radius: 10px 10px 10px 10px;
+  height: 18rem;
+  width: 100%;
+}
+
+
 .blog-img, .blog-txt h1, .blog-txt p {
   margin: 0 0 1rem 0;
 }
+
+.blog-txt h1{
+  line-height: 33px;
+  font-size: 21px;
+  color: var(--lg-heading);
+}
+
+.blog-txt p{
+  font-weight: 400;
+  color: #334157;
+  line-height: 25px;
+  font-size: 15.5px;
+}
+
+
 
 /* header*/
 .header {
@@ -127,11 +198,12 @@ section:nth-of-type(1){
 /* wrapper*/
 .wrapper {
   width: 100%;
-  padding-left: 0rem;
-  padding-right: 1.7rem;
+  padding-left: 10rem;
+  padding-right: 10rem;
   padding-top: 5rem;
   margin-bottom: 5rem;
 }
+
 .grid-cols-2 {
   width: 100%;
   height: 100%;
@@ -212,21 +284,7 @@ section:nth-of-type(1){
 .view_more_btn:hover {
   transition: box-shadow 0.25s ease, transform 0.25s ease;
 }
-.documentation_btn {
-  width: 150px;
-  height: 55px;
-  font-size: 16px;
-  font-weight: 500;
-  color: #fff;
-  letter-spacing: 0;
-  background-color: #e1e7fc;
-  color: #0e2a86;
-  box-shadow: 0 0.5rem 1.5rem rgba(22, 28, 45, 0.1);
-}
-.documentation_btn:hover {
-  background-color: #d7ddf1;
-  transition: box-shadow 0.25s ease, transform 0.25s ease;
-}
+
 .grid-item-2 {
   width: 100%;
   height: 100%;
@@ -268,8 +326,8 @@ section:nth-of-type(1){
 .featured_info span {
   width: 100%;
   display: block;
-  font-size: 21px;
   line-height: 33px;
+  font-size: 21px;
   color: var(--lg-heading);
 }
 .featured_info p {
@@ -287,6 +345,114 @@ footer {
   height: 12px;
   margin-top: 8rem;
 }
+
+
+/* Login form  */
+.login-body{
+  background-image: url('../img/blogging2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.login{
+  margin: auto ;
+  margin-top:19%;
+  width: 300px;
+}
+
+.login-screen{
+  background-color:#f5d8dd;
+  padding:30px;
+  border-radius: 5px;
+  box-shadow: 0 0 50px #ccc;
+ 
+}
+
+.app-title{
+  text-align:center;
+  margin-bottom: 12px;
+}
+
+.login-form{
+  text-align: center;
+}
+
+.control-group{
+  margin-bottom: 10px;
+  
+}
+
+input{
+  text-align:center;
+  background-color:#f5d8dd;
+  border:1px solid #444;
+  border-radius: 3px;
+  font-size: 16px;
+  font-weight:200;
+  padding:10px 0;
+  width:250px;
+  transition:border .5s;
+}
+
+
+.control-group-gender input{
+  margin-top: 5px;
+}
+
+input:focus{
+  border:2px solid #3498db;
+  box-shadow:none;
+}
+
+.btn{
+
+  border:2px solid transparent;
+  font-size: 16px;
+  line-height:25px;
+  padding:10px 0;
+  text-decoration: none;
+  text-shadow: none;
+  border-radius: 3px;
+  box-shadow: none;
+  transition: 0.25s;
+  display: block;
+  width:250px;
+  
+}
+
+.login-link{
+  font-size:12px;
+  color:#444;
+  display:block;
+  margin-top:2px;
+  
+}
+
+/* Registration body */
+
+.registration{
+  margin: auto ;
+  margin-top:15%;
+  width: 400px;
+}
+
+.Registration-body{
+  background-image: url('../img/blogging2.jpg');
+  background-repeat: no-repeat;
+  background-size: cover;
+}
+
+.control-group-gender{
+  display: flex;
+  justify-content:space-evenly;
+  margin-bottom: 10px;
+}
+
+ #btn-reg{
+  width:250px;
+  margin-left: 45px;
+}
+
 
 /* media query for responsiveness */
 @media screen and (min-width: 1024px) {
@@ -449,3 +615,4 @@ footer {
     font-size: 19px;
   }
 }
+
