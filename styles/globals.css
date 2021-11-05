@@ -468,10 +468,6 @@ input:focus{
   width:250px;
 }
 
-/* #btn-log {
-  margin: 1.8rem 0 0 0;
-} */
-
 .login-link{
   font-size:12px;
   color:#444;
@@ -480,6 +476,8 @@ input:focus{
 }
 
 .forgot-pw {
+  position: relative;
+  top: .3rem;
   transition: .3s;
 }
 .forgot-pw:hover {
