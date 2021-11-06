@@ -1,0 +1,33 @@
+.search-input {
+    border-radius: 3rem;
+    border: 1.5px solid #000;
+    padding: .3rem 0rem .3rem 4rem;
+    width: 16rem;
+
+    transition: .3s;
+}
+.search-input:focus {
+    width: 20rem;
+    outline: none;
+    padding: .3rem .3rem .3rem 2.2rem;
+}
+
+.search-field .button {
+    background-image: url(../img/magnifying-glass.png);
+    background-position: right 0px top 0%, left 0px top 0%;
+    background-size: 16px;
+    background-repeat: no-repeat;
+    background-color: transparent;
+    margin: .35rem 0 0 0;
+    padding: .1rem .6rem;
+    cursor: pointer;
+    border: none;
+    outline: none;
+    position: absolute;
+    left: 1.2rem;
+
+    transition: .3s;
+}
+.search-field .button:hover {
+    opacity: .7;
+}
