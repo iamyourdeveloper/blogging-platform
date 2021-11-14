@@ -1,109 +1,400 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8"/>
+    <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Landing Page</title>
+
+    <!--styles.css  -->
     <link rel="stylesheet" href="../styles/globals.css">
     <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
-    <title>Login</title>
+    <!-- remix icons CDN -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
 </head>
-<body class="login-body">
-    <div class="login" id="login-id">
-        <div class="login-screen">
-            <div class="log-sign">
-                <div class="log-sign-top" id="log-sign-top-id">
-                    <div class="log-head" id="log-head-id">
-                        <h3 id="log-head-h3">Login</h3>
-                        <!-- <hr id="log-head-hr"> -->
-                    </div>
-                    <div class="sign-up-head" id="sign-head-id">
-                        <h3 id="sign-up-h3">Sign Up</h3>
-                        <!-- <hr id="sign-up-hr"> -->
+
+<body>
+    <!-- home section -->
+    <section class="wrapper1">
+        <header class="container header">
+            <!--navbar-->
+            <nav class="nav">
+                <div class="logo">
+                    <h2>BinaryBlog.</h2>
+                </div>
+
+                <div class="nav_menu" id="nav_menu">
+                    <button class="close_btn" id="close_btn">
+                        <i class="ri-close-fill"></i>
+                    </button>
+
+                    <ul class="nav_menu_list">
+                        <li class="nav_menu_item">
+                            <a href="log-reg.html" class="nav_menu_link">login</a>
+                        </li>
+                        <li class="nav_menu_item">
+                            <a href="#" class="nav_menu_link">about</a>
+                        </li>
+                        <li class="nav_menu_item">
+                            <a href="#" class="nav_menu_link">service</a>
+                        </li>
+                        <li class="nav_menu_item">
+                            <a href="#" class="nav_menu_link">contact</a>
+                        </li>
+                        <div class="top-search">
+                            <form action="" method="get" class="search">
+                              <div class="search-field">
+                                <input type="search" name="search" placeholder="What are you looking for?" class="search-input">
+                                <input type="submit" value="" class="button">
+                              </div>
+                            </form>
+                        </div>
+                    </ul>
+                </div>
+
+                <button class="toggle_btn" id="toggle_btn">
+                    <i class="ri-menu-line"></i>
+                </button>
+            </nav>
+        </header>
+
+        <div class="container data">
+            <div class="grid-cols-2">
+                <div class="grid-item-1">
+                    <h1 class="main-heading">
+                        Lorem, ipsum. <span>BinaryBlog.</span>
+                        <br>
+                        Blog about anything.
+                    </h1>
+                    <p class="info-text">
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Corporis, repellat quidem.
+                    </p>
+                    <form action="">
+                        <div class="btn-wrapper">
+                            <input type="email" class="email-text-field" placeholder="Enter your email" required>
+                            <button type="submit" class="btn view_more_btn">
+                                sign up <i class="ri-arrow-right-line"></i>
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="grid-items-2">
+                    <div class="team_img_wrapper">
+                        <img src="../img/hero.svg" alt="team">
                     </div>
                 </div>
-                <hr class="log-sign-hr" id="log-sign-hr-id">
             </div>
-
-            <div class="app-title login-title" id="login-title-id">
-                <h1>Login</h1>
-            </div>
-            <form method="GET" class="log-form" id="log-form">
-                <div class="login-form" id="login-form-id">
-                    <div class="control-group">
-                        <input type="text" class="login-field" for="username" placeholder="Username" id="login-name" required/>
-                        <label class="login-field-icon fui-user" for="login-name"></label>
-                    </div>
-
-                    <div class="control-group">
-                        <input type="password" class="login-field" for="password" placeholder="Password" id="login-pass" required/>
-                        <label class="login-field-icon fui-lock" for="login-pass"></label>
-                    </div>
-
-                    <button class="btn btn-primary btn-large btn-block" type="submit" id="btn-log" value="submit">Log in</button>
-
-                    <a href="#" class="forgot-pw" id="forgot-pw-id">Forgot Password?</a>
-                    <!-- <a class="login-link" href="#" id="sign-up">SignUp?</a> -->
-                </div>
-            </form>
-
-            <div class="app-title register-title" id="reg-title-id">
-                <h1>Register</h1>
-            </div>
-            <form method="GET">
-                <div class="registration" id="registration-id">
-                    <div class="control-group">
-                        <input type="text" class="login-field" value="" placeholder="First name" id="login-name" required/>
-                        <label class="login-field-icon fui-user" for="login-name"></label>
-                    </div>
-
-                    <div class="control-group">
-                        <input type="text" class="login-field" value="" placeholder="Last name" id="login-name" required/>
-                        <label class="login-field-icon fui-user" for="login-name"></label>
-                    </div>
-
-                    <div class="control-group">
-                        <input type="text" class="login-field" value="" placeholder="Username" id="login-name" required/>
-                        <label class="login-field-icon fui-user" for="login-name"></label>
-                    </div>
-
-                    <div class="control-group-gender">
-
-                        <label for="male">Male</label>
-                        <input type="radio" id="male">
-                        <label for="female">Female</label><br>
-                        <input type="radio" id="female">
-                        <label for="other">Other</label><br>
-                        <input type="radio" id="other">
-                    </div>
-
-                    <div class="control-group">
-                        <input type="email" class="login-field" value="" placeholder="Email address" id="login-name" required/>
-                        <label class="login-field-icon fui-user" for="login-name"></label>
-                    </div>
-
-                    <div class="control-group">
-                        <input type="password" class="login-field" value="" placeholder="Password" id="login-pass" required/>
-                        <label class="login-field-icon fui-lock" for="login-pass"></label>
-                    </div>
-
-                    <div class="control-group">
-                        <input type="password" class="login-field" value="" placeholder="Confirm password" id="login-pass" required/>
-                        <label class="login-field-icon fui-lock" for="login-pass"></label>
-                    </div>
-
-                    <button class="btn btn-primary btn-large btn-block" value="submit" id="btn-reg">Sign Up</button>
-                    <!-- <a class="login-link" href="#" id="sign-up">LogIn</a> -->
-                </div>
-            </form>
         </div>
-    </div>
+    </section>
+
+    <!-- description section -->
+    <section class="wrapper">
+        <div class="container-sect-2" data-aos="fade-up" data-aos-duration="1000">
+            <div class="grid-cols-3">
+                <div class="grid-col-item gci-1">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <div class="featured_info">
+                        <span>Blogs for everyone</span>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+                            ratione facilis animi voluptas exercitationem molestiae.
+                        </p>
+                    </div>
+                </div>
+                <div class="grid-col-item">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M17 14v6m-3-3h6M6 10h2a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2zm10 0h2a2 2 0 002-2V6a2 2 0 00-2-2h-2a2 2 0 00-2 2v2a2 2 0 002 2zM6 20h2a2 2 0 002-2v-2a2 2 0 00-2-2H6a2 2 0 00-2 2v2a2 2 0 002 2z" />
+                        </svg>
+                    </div>
+                    <div class="featured_info">
+                        <span>Get inspired</span>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Ut
+                            ipsum esse corrupti. Quo, labore debitis!
+                        </p>
+                    </div>
+                </div>
+
+                <div class="grid-col-item">
+                    <div class="icon">
+                        <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
+                        </svg>
+                    </div>
+                    <div class="featured_info">
+                        <span>Developers guide</span>
+                        <p>
+                            Lorem ipsum dolor sit amet consectetur adipisicing elit. Non
+                            nostrum voluptate totam ipsa corrupti vero!
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Blog section -->
+    <section class="grid-blogs-sect">
+        <div class="gb-head">
+            <h1>Top Blogs</h1>
+            <p>Read the best blogs from the most renown bloggers in our network.</p>
+        </div>
+        <div class="wrapper grid-blogs">
+            <div class="blog-card bc-1" data-aos="flip-left">
+                <div class="blog-img-1"></div>
+                <div class="blog-txt bt-1">
+                    <h1>Theme</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                    <p><a href="#">Read more</a></p>
+                </div>
+            </div>
+            <div class="blog-card bc-2" data-aos="fade-up">
+                <div class="blog-img-2 bi-2"></div>
+                <div class="blog-txt">
+                    <h1>Theme</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                    <p><a href="#">Read more</a></p>
+                </div>
+            </div>
+            <div class="blog-card bc-3" data-aos="flip-right">
+                <div class="blog-img-3"></div>
+                <div class="blog-txt bt-3">
+                    <h1>Theme</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                    <p><a href="#">Read more</a></p>
+                </div>
+            </div>
+            <div class="blog-card bc-4" data-aos="flip-left">
+                <div class="blog-img-4 bi-4"></div>
+                <div class="blog-txt">
+                    <h1>Theme</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                    <p><a href="#">Read more</a></p>
+                </div>
+            </div>
+            <div class="blog-card bc-5" data-aos="fade-up">
+                <div class="blog-img-5"></div>
+                <div class="blog-txt bt-5">
+                    <h1>Theme</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                    <p><a href="#">Read more</a></p>
+                </div>
+            </div>
+            <div class="blog-card bc-6" data-aos="flip-right">
+                <div class="blog-img-6 bi-6"></div>
+                <div class="blog-txt">
+                    <h1>Theme</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore
+                        et dolore magna aliqua.</p>
+                    <p><a href="#">Read more</a></p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Award Winning/Recommended Theme Section -->
+
+    <section class="award-sect">
+        <div class="ar-1">
+            <div class="ar-head">
+                <h1>Recommended Themes</h1>
+                <p>Try our most recommended themes to customize your blogs.</p>
+            </div>
+            <div class="ar-mid">
+                <div class="ar-mid-ct">
+                    <div class="ar-mid-txt">
+                        <p>Theme:</p>
+                        <h1>USA</h1>
+                    </div>
+                </div>
+                <div class="ar-mid-ct">
+                    <div class="ar-mid-txt">
+                        <p>Theme:</p>
+                        <h1>USA</h1>
+                    </div>
+                </div>
+                <div class="ar-mid-ct">
+                    <div class="ar-mid-txt">
+                        <p>Theme:</p>
+                        <h1>USA</h1>
+                    </div>
+                </div>
+                <div class="ar-mid-ct">
+                    <div class="ar-mid-txt">
+                        <p>Theme:</p>
+                        <h1>USA</h1>
+                    </div>
+                </div>
+                <div class="ar-mid-ct">
+                    <div class="ar-mid-txt">
+                        <p>Theme:</p>
+                        <h1>USA</h1>
+                    </div>
+                </div>
+                <div class="ar-mid-ct">
+                    <div class="ar-mid-txt">
+                        <p>Theme:</p>
+                        <h1>USA</h1>
+                    </div>
+                </div>
+                <div class="ar-mid-ct ar-mid-ct-7">
+                    <div class="ar-mid-txt">
+                        <p>Theme:</p>
+                        <h1>USA</h1>
+                    </div>
+                </div>
+                <div class="ar-mid-ct ar-mid-ct-8">
+                    <div class="ar-mid-txt">
+                        <p>Theme:</p>
+                        <h1>USA</h1>
+                    </div>
+                </div>
+                <!-- <button class="ar-btn">
+                    Start Your Free Trial
+                </button> -->
+            </div>
+            <div>
+                <button class="ar-btn">
+                        Start Your Free Trial
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Active/Register Theme Section -->
+
+    <section class="theme-reg">
+        <div class="tr-1">
+            <div class="tr-head">
+                <h1>Activate Your Theme</h1>
+                <p>Begin increasing your reputation to the world today.</p>
+            </div>
+            <div class="tr-mid">
+                <div class="tr-mid-ct">
+                    <div class="tr-img-ct tr-img-ct-1">
+                        <img src="../img/globe.png" alt="">
+                    </div>
+                    <h4>Localisation</h4>
+                </div>
+                <div class="tr-mid-ct">
+                    <div class="tr-img-ct tr-img-ct-2">
+                        <img src="../img/money.png" alt="" class="tr-img-2">
+                    </div>
+                    <h4>Monetization</h4>
+                </div>
+                <div class="tr-mid-ct tr-mid-ct-3">
+                    <div class="tr-img-ct tr-img-ct-3">
+                        <img src="../img/credit-cards.png" alt="">
+                    </div>
+                    <h4 class="tr-h4-3">Security of Info</h4>
+                </div>
+            </div>
+            <div>
+                <button class="tr-btn">
+                        Start Your Free Trial
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Testimonial Section -->
+
+    <section class="test-sect">
+        <div class="s3-ct">
+            <h1>What They've Said</h1>
+            <div class="s3-test">
+                <div class="s3-sub-div" id="slide">
+                    <div class="s3-sub-ct" id="s3-sub-a">
+                        <img src="img/avatar-ali.png" alt="">
+                        <h3>Ali Bravo</h3>
+                        <p>“We have been able to cancel so many other subscriptions since using 
+                            BinaryBlog. There is no more cross-channel confusion and everyone is much 
+                            more focused.”</p>
+                    </div>
+                    <div class="s3-sub-ct" id="s3-sub-b">
+                        <img src="img/avatar-anisha.png" alt="">
+                        <h3>Anisha Li</h3>
+                        <p>“BinaryBlog has supercharged our team’s workflow. The ability to maintain 
+                            visibility on larger milestones at all times keeps everyone motivated.”</p>
+                    </div>
+                    <div class="s3-sub-ct" id="s3-sub-c">
+                        <img src="img/avatar-richard.png" alt="">
+                        <h3>Richard Watts</h3>
+                        <p>“BinaryBlog allows us to provide structure and process. It keeps us organized 
+                            and focused. I can’t stop recommending them to everyone I talk to!”</p>
+                    </div>
+                    <div class="s3-sub-ct" id="s3-sub-d">
+                        <img src="img/avatar-shanai.png" alt="">
+                        <h3>Shanai Gough</h3>
+                        <p>“Their software allows us to track, administer, manage, and collaborate on our projects 
+                            from anywhere. It keeps the whole team in-sync without being intrusive.”</p>
+                    </div>
+                </div>
+            </div>
+            <!-- <div class="s3-dots" id="dots">
+                <div class="dots active-dot" id="dots-1"></div>
+                <div class="dots" id="dots-2"></div>
+                <div class="dots" id="dots-3"></div>
+                <div class="dots" id="dots-4"></div>
+            </div> -->
+            <!-- <div class="arrows-div" id="arrows">
+                <img src="img/left-arrow.svg" class="arrow" id="left-arrow" alt="">
+                <img src="img/right-arrow.svg" class="arrow" id="right-arrow" alt="">
+            </div> -->
+            <button id="s3-btn">Get Started</button>
+        </div>
+    </section>
+
+    <!-- Footer -->
+
+    <footer>
+        <div class="footer-ct">
+            <div class="bt-search">
+                <form action="" method="get" class="search">
+                  <div class="search-field">
+                    <input type="search" name="search" placeholder="What are you looking for?" class="search-input">
+                    <input type="submit" value="" class="button">
+                  </div>
+                </form>
+            </div>
+            <div class="ft-logo">
+                <h1>BinaryBlog</h1>
+            </div>
+            <div class="ft-icons">
+                <a href="#"><img src="../img/facebook.png" alt="" class="face-img"></a>
+                <a href="#"><img src="../img/twitter.png" alt=""></a>
+                <a href="#"><img src="../img/linkedin.png" alt=""></a>
+                <a href="#"><img src="../img/dribble.png" alt=""></a>
+                <a href="#"><img src="../img/github.png" alt="" class="git-img"></a>
+            </div>
+            <div class="ft-links">
+                <p><a href="#">Home</a></p>
+                <p><a href="#">Pricing</a></p>
+                <p><a href="#">Products</a></p>
+                <p><a href="#">About Us</a></p>
+            </div>
+            <p class="copyright">Copyright 2022. All Rights Reserved</p>
+        </div>
+    </footer>
 
     <!-- AOS Animation -->
     <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <!-- GSAP CDN -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.8.0/gsap.min.js"></script>
     <script type="text/javascript" src="../pages/script.js" defer></script>
-    <script type="text/javascript" src="../pages/script-2.js" defer></script>
 </body>
+
 </html>
