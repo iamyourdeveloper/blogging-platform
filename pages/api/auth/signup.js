@@ -1,0 +1,140 @@
+import nc from 'next-connect';
+import * as yup from 'yup';
+import bcrypt from 'bcryptjs';
+import slug from 'slug';
+import multer from 'multer';
+import { onError, onNoMatch } from '@/utils/ncOptions';
+import db from '@/utils/database';
+import storage from '@/utils/cloudinary';
+// import yupValidator from '@/utils/validate';
+// import { userRegisterSchema, yupValidator } from '@/utils/validateSchemas';
+import { accessTokenGenerator } from '@/utils/jwtGenerator';
+import User from '@/models/User';
+
+const upload = multer({
+  storage,
+  limits: { fieldSize: 3 * 1024 * 1024 },
+  fileFilter(req, file, cb) {
+    if (!file.originalname.match(/\.(gif|jpe?g|png)$/i)) {
+      return cb(new Error("file must be an image"));
+    }
+    return cb(null, true);
+  }
+}); //3MB
+
+const handler = nc({onError, onNoMatch});
+// needed to decrypt req.body
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
+
+// const validation = nc({onError, onNoMatch}).post(yupValidator(userRegisterSchema));
+
+handler.use(upload.single('image_url')).post(async (req, res) => {
+  // req.file produced by multer after uploading to cloudinary
+  // path = secure_url / filename = public_id
+  let { firstName, lastName, username, email, password, password2 } = req.body;
+  // JSON.parse(req.body)
+  console.log(firstName);
+  console.log(lastName);
+  console.log(username);
+  console.log(email);
+  console.log(password);
+
+  if (firstName && typeof firstName !== 'string') {
+    return res.status(403).json({ errors: [{ msg: 'Invalid credentials.' }] });
+  };
+  if (lastName && typeof lastName !== 'string') {
+    return res.status(403).json({ errors: [{ msg: 'Invalid credentials.' }] });
+  };
+  if (username && typeof username !== 'string') {
+    return res.status(403).json({ errors: [{ msg: 'Invalid credentials.' }] });
+  };
+
+  firstName = slug(firstName, {replacement: ' ', lower: false});
+  lastName = slug(lastName, {replacement: ' ', lower: false});
+
+  console.log("checking passwords")
+  if (password !== password2) {
+    return res.status(400).send([{ errors: [{ msg: "Passwords do not match." }] }]);
+  };
+
+  console.log("checking email")
+  if (!email || !email.includes('@')) {
+    console.log(email)
+    return res.status(400).send({ errors: [{ msg: "Invalid credentials." }] });
+  }
+
+  console.log("checking username")
+  if (!username) {
+    return res.status(403).json({ errors: [{ msg: 'Invalid credentials.' }] });
+  };
+
+  let defaultAvatar = `https://res.cloudinary.com/${process.env.CLOUDINARY_CLOUD_NAME}/image/upload/v1636353979/blog/Default-welcomer_fhdikf.png`;
+  let avatarImage = defaultAvatar;
+  let avatarImageFilename = '';
+  // *** role changes to admin when profile is created then blogs can be made
+  // let roles = ['super-admin', 'admin', 'user', 'banned']
+  let role = 'user';
+  await db.connectToDB();
+  const findUserByEmail = await User.findOne({ email });
+
+  if (findUserByEmail) {
+    return res.status(403).json({ errors: [{ msg: "User email already exists!"}] });
+  };
+
+  const findUserByUsername = await User.findOne({ username });
+
+  if (findUserByUsername) {
+    return res.status(403).json({ errors: [{ msg: "Username already exists!"}] });
+  };
+
+  if (req.file && req.file.path) {
+    // if (req.file.path) {
+      avatarImage = req.file.path;
+      avatarImageFilename = req.file.filename;
+    // }
+  }
+  // if storing with diskstorage setup for multer
+  if (avatarImage.startsWith('public\\')) {
+    let editImgUrl = avatarImage.slice(6);
+    avatarImage = editImgUrl;
+  }
+
+  // *** slug should be optional?, purpose is to remove emojis, perhaps apply to first or last names?
+  // *** lower false means caps are not turned lowercase, all but numbers and letters are replaces vie ' '
+  // username = slug(req.body.username, {replacement: ' ', lower: false});
+
+  let salt = await bcrypt.genSalt(11);
+  let encryptedPassword = await bcrypt.hash(password, salt);
+
+  let user = await new User({ firstName, lastName, username, email, avatarImage, avatarImageFilename, password: encryptedPassword, role });
+  
+  // *** may not be needed
+  // const jwtToken = accessTokenGenerator(user._id, user.role);
+  await user.save();
+  await db.disconnect();
+
+  return res.status(201).json({
+    status: "User registered!",
+    // TODO; after registration, redirect to sign in
+    data: { valid: true }
+    // data: { token: jwtToken }
+    // data: { user }
+  });
+});
+
+
+
+
+
+// handler.get(async (req, res) => {
+//   res.status(200).json({
+//     status: "User registered!"
+//   })
+// })
+
+export default handler;
+// const user = await User.findById(req.user.id).select('-password');
