@@ -1,76 +1,54 @@
-import React, { useState, useEffect } from 'react'
-import { useSession, getProviders, signIn, getCsrfToken, ClientSafeProvider, LiteralUnion } from "next-auth/react"
-import { useRouter } from "next/router";
-
+import React, { useState } from 'react';
+import Link from "next/link";
+import Router from 'next/router';
+// import { login } from '../../../redux/actions/authActions';
+// import { useSelector, useDispatch } from "react-redux";
 
 const SignIn = () => {
-  const {data: session, status} = useSession();
-  // const providers = getProviders();
-  const router = useRouter();
+  // const dispatch = useDispatch();
+  // const userAuth = useSelector(state => state.auth);
+  // const { isAuthenticated } = userAuth;
+  const [error, setError] = useState('');
+  const [formData, setFormData] = useState ({
+    email: '', password: ''
+  });
   
-  const [providers, setProviders] = useState();
+  if (typeof window !== undefined && isAuthenticated) {
+    Router.push("/")
+  };
 
-  // const [session, loading] = useSession({
-  //   required: true,
-  //   redirectTo: 'http://localhost:3000',
-  //   queryConfig: {
-  //     staleTime: 60 * 1000 * 60 * 3, // 3 hours
-  //     refetchInterval: 60 * 1000 * 5, // 5 minutes
-  //   },
-  // });
+  const { email, password } = formData;
 
-  useEffect(() => {
-    const setTheProviders = async () => {
-      const setupProviders = await getProviders();
-      setProviders(setupProviders);
-    };
-    setTheProviders();
-  }, []);
-
-  if (status === 'loading') {
-    return <h1>Loading...</h1>
+  const onChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
   }
+  const signinHandler = async (e) => {
+    e.preventDefault();
+    // dispatch(login(formData));
+    // dispatch(login({ email, password }));
+  };
 
-  if (session) {
-    router.push('/')
-  }
-
-  console.log("session")
-  console.log(session)
-  console.log("++++++++++")
-  console.log("status")
-  console.log(status)
-  console.log("++++++++++")
-  console.log("providers")
-  console.log(providers)
   return (
-    <div>
-      <h2>Signin</h2>
-      
-      <div>
-        {/* {providers.credentials.name === "Credentials" && ()} */}
-      </div>
-
-      <h2>{providers?.credentials.name}</h2>
-      {/* <div>{providers?.credentials.signinUrl}</div> */}
-      {/* <div>{providers?.credentials}</div> */}
-      {/* <button onClick={() => signIn("Credentials", {email: values.email, password: values.password })}></button> */}
-      {/* <form action="/api/auth/signin"> */}
-        {/* <input type="hidden" name="csrfToken" /> */}
-        {/* <div className="signin__group"> */}
-          <label className="signin__label">Email: </label>
-          <label className="signin__label">Password: </label>
-          {/* <div> */}
-            {/* {if (providers.name === "Credentials") { */}
-              {/* return; */}
-            {/* }} */}
-          {/* </div> */}
-          {/* <div>{providers?.credentials.email}</div> */}
-          {/* <button onClick={() => signIn("Credentials", {email: "john@doe.com", password: '1234' })}>Sign In</button> */}
-          {/* <button onClick={() => signIn(providers?.credentials.id)}>Sign In</button> */}
+    <section>
+      <div className="signin__card">
+        <h2>Welcome, please sign in.</h2>
+        <form onSubmit={signinHandler}>
+          <div className="signin__group">
+            <label htmlFor="email">E-Mail</label>
+            <input className="signin__input" type="email" placeholder="john@doe.com" name="email" value={email} onChange={onChange} aria-required="true" required/>
+            <label htmlFor="password">Password</label>
+            <input className="signin__input" type="email" name="password" value={password} onChange={onChange} aria-required="true" required/>
+            <button type="submit">
+              Sign In
+            </button>
+          </div>
+        </form>
+        <div>
+          <p>Do not have an account?</p> 
+          <span><Link href="/auth/signup"><a>Sign Up</a></Link></span>.
         </div>
-      // </form>
-    // </div>
+      </div>
+    </section>
   )
 }
 export default SignIn;

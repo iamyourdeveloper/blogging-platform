@@ -1,15 +1,16 @@
 import React, { useState } from 'react';
-// import { useSession, getSession, getProviders, providers, signIn, getCsrfToken } from "next-auth/client";
-import { useSession, getSession, getProviders, providers, signIn, getCsrfToken } from "next-auth/react";
 import Link from "next/link";
 import Image from "next/image";
 import Router from 'next/router';
+// import { setAlert } from '../../../redux/actions/alertActions';
+// import { register } from '../../../redux/actions/authActions';
+// import { useSelector, useDispatch } from "react-redux";
 
-// const SignUp = ({providers}) => {
 const SignUp = () => {
-  const { data: session, status } = useSession();
+  // const dispatch = useDispatch();
+  // const userAuth = useSelector(state => state.auth);
+  // const { isAuthenticated, loading } = userAuth;
   const [error, setError] = useState('');
-  // const [session, loading] = useSession();
   const [formData, setFormData] = useState ({
     firstName: '', lastName: '', username: '', email: '', image_url: '', password: '', password2: ''
   });
@@ -20,36 +21,23 @@ const SignUp = () => {
   const [imageData, setImageData] = useState(null);
   const [showImageData, isShowImageData] = useState(false);
 
-  const { firstName, lastName, username, email, image_url, password, password2 } = formData;
+  const { firstName, lastName, username, email, password, password2 } = formData; // image_url,
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
   const handleImageChange = (e) => {
-    // check file type
     let fileToUpload = e.target.files[0];
     checkFileType(fileToUpload);
-    // check file size
     checkFileSize(fileToUpload);
-    // setImage(e.target.files[0]);
 
-    setFormProductData({
-      ...formProductData,
+    setFormData({
+      ...formData,
       [e.target.name]: e.target.files[0]
     });
-    // * set up image preview, if valid
-    if (fileToUpload) {
-      const reader = new FileReader();
-      reader.addEventListener("load", () => {
-        setImageData(reader.result)
-        isShowImageData(true);
-      });
-      reader.readAsDataURL(fileToUpload);
-    }
   };
 
-  // check file type
   const checkFileType = (img) => {
     const types = ['image/png', 'image/jpg', 'image/jpeg', 'image/gif'];
     if (types.every(type => img.type !== type)) {
@@ -65,30 +53,18 @@ const SignUp = () => {
     }
     return setFileSizeError(false);
   }
-
-
-  // if (status === "authenticated") {
-  //   return <p>Signed in as {session.username}</p>
-  // redirect to "/"
-  // }
-  // Error: Error serializing `.csrfToken` returned from `getServerSideProps` in "/auth/signin".
-  // Reason: `undefined` cannot be serialized as JSON. Please use `null` or omit this value.
-  if (typeof window !== undefined && session) {
+  
+  if (typeof window !== undefined && isAuthenticated) {
     Router.push("/")
   };
 
   const registerHandler = (e) => {
-    e.preventDefault(e);
-    // signIn(formData, {formData: 'sample string'});
-    // signIn('custom', {formData}).then(res => {
-    //   if (res.error) {
-    //     setError(true);
-    //   } else {
-    //     Router.push('/');
-    //     setError(false);
-    //   }
-    // });
-    // signIn();
+    e.preventDefault();
+    if (password !== password2) {
+      dispatch(setAlert('Passwords do not match', 'danger'));
+    } else {
+      dispatch(register(formData));
+    }
   };
 
   return (
@@ -108,17 +84,6 @@ const SignUp = () => {
                 onChange={handleImageChange}
                 required
               />
-              {imageData && (
-                <div className="admForm__show">
-                  <div className="btn btn-secondary" onClick={() => isShowImageData(true)}>Show Preview</div>
-                  <div className="btn btn-secondary" onClick={() => isShowImageData(false)}>Hide Preview</div>
-                </div>
-                )}
-                {imageData && showImageData && (
-                  <div className="admForm__image create-form">
-                    <Image className="admForm__img create-form" src={imageData} alt="Uploaded Product" />
-                  </div>
-                )}
               <div className="signin__group">
                 <label className="signin__label" htmlFor="firstName">Firstname: </label>
                 <div className="signin__input">
@@ -155,7 +120,21 @@ const SignUp = () => {
                   <input type="password" value={password2} name="password2" onChange={e => onChange(e)} required/>
                 </div>
               </div>
-              <button type="submit" onClick={e => registerHandler(e)}>Create new Account</button>
+              <div className="form__footer">
+                {fileTypeError || fileSizeError ? (
+                  <div className="form__error">
+                    File type or size limit exceeded: jpg, jpeg, png, gif only and size must be less than 3mb.
+                  </div>
+                ) : (
+                  <>
+                    {/* <button type="submit" onClick={e => registerHandler(e)}>Create new Account</button> */}
+                  <input type="submit" className="btn btn-primary btn-full-width form__submit" value="Register" />
+                  </>
+                )}
+                <p>
+                  Already have an account?{" "}<Link to="/login"><span className="form form__link">Login.</span></Link>
+                </p>
+              </div>
             </div>
           </form>
         </div>
@@ -170,8 +149,3 @@ const SignUp = () => {
   )
 }
 export default SignUp;
-// export async function getInitialProps(context) {
-//   return {
-//     providers: await providers(context)
-//   }
-// }

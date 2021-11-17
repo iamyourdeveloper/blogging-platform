@@ -1,22 +1,27 @@
 import nc from 'next-connect';
 import bcrypt from 'bcryptjs';
 import { onError, onNoMatch } from '@/utils/ncOptions';
+import cookie from 'cookie';
 import db from '@/utils/database';
-import validate from '@/utils/validate';
-import userLoginSchema from '@/utils/validateSchemas';
+import User from '@/models/User';
+import { accessTokenGenerator, accessTokenCookieOptions } from '@/utils/jwtGenerator';
 
 const handler = nc({onError, onNoMatch});
 
-// login new user
+// login user
 // POST /api/auth/login
-// are we using jwt
-// handler.post(jwt?, (req, res) => {
-// handler.use(validate(userLoginSchema)).post(async (req, res) => {
+// are we using jwt secret placed inside of a cookie
+// *** Insomnia tested - passed
 handler.post(async (req, res) => {
   const { email, password } = req.body;
 
+  console.log(req.body)
   await db.connectToDB();
+  console.log("user db")
   let user = await User.findOne({ email });
+  // let user = await User.findOne({ email }).select('-password');
+  console.log(user)
+  // retursn user._id
   if (!user) {
     return res.status(403).json({ errors: [{ msg: "Invalid credentials." }] });
   }
@@ -28,9 +33,15 @@ handler.post(async (req, res) => {
     return res.status(400).json({ errors: [{ msg: "Invalid credentials."}] });
   }
 
-  // TODO - create JWT token, unless other verif method used
-  // const jwtToken = accessTokenGenerator(user._id, user.role);
+  const jwtAccessToken = accessTokenGenerator(user._id, user.role);
+  const cookieOptions = accessTokenCookieOptions();
 
+  res.setHeader(
+    "Set-Cookie",
+    cookie.serialize("token", jwtAccessToken, cookieOptions)
+  );
+
+  // res.cookie('token', jwtAccessToken, cookieOptions);
   return res.status(201).json({
     status: "User logged in!",
     data: {
@@ -47,5 +58,4 @@ handler.post(async (req, res) => {
     }
   });
 });
-
 export default handler;

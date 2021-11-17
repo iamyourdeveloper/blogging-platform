@@ -1,28 +1,17 @@
 import nc from 'next-connect';
-import * as yup from 'yup';
+// import * as yup from 'yup';
 import bcrypt from 'bcryptjs';
+import cookie from 'cookie';
 import slug from 'slug';
 import multer from 'multer';
 import { onError, onNoMatch } from '@/utils/ncOptions';
 import db from '@/utils/database';
-import storage from '@/utils/cloudinary';
+import { storage } from '@/utils/cloudinary';
 // import yupValidator from '@/utils/validate';
 // import { userRegisterSchema, yupValidator } from '@/utils/validateSchemas';
-import { accessTokenGenerator } from '@/utils/jwtGenerator';
+import { accessTokenGenerator, accessTokenCookieOptions } from '@/utils/jwtGenerator';
 import User from '@/models/User';
 
-const upload = multer({
-  storage,
-  limits: { fieldSize: 3 * 1024 * 1024 },
-  fileFilter(req, file, cb) {
-    if (!file.originalname.match(/\.(gif|jpe?g|png)$/i)) {
-      return cb(new Error("file must be an image"));
-    }
-    return cb(null, true);
-  }
-}); //3MB
-
-const handler = nc({onError, onNoMatch});
 // needed to decrypt req.body
 export const config = {
   api: {
@@ -30,8 +19,22 @@ export const config = {
   },
 };
 
-// const validation = nc({onError, onNoMatch}).post(yupValidator(userRegisterSchema));
+const upload = multer({
+  storage,
+  limits: { fieldSize: 3 * 1024 * 1024 },
+  // TODO --- filefilter seems to err; consider deletion
+  // fileFilter(req, file, cb) {
+  //   if (!file.originalname.match(/\.(gif|jpe?g|png)$/i)) {
+  //     return cb(new Error("file must be an image"));
+  //   }
+  //   return cb(null, true);
+  // }
+}); //3MB
 
+const handler = nc({onError, onNoMatch});
+
+
+// *** Insomnia tested - passed
 handler.use(upload.single('image_url')).post(async (req, res) => {
   // req.file produced by multer after uploading to cloudinary
   // path = secure_url / filename = public_id
@@ -53,6 +56,9 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
     return res.status(403).json({ errors: [{ msg: 'Invalid credentials.' }] });
   };
 
+  // *** slug should be optional?, purpose is to remove emojis, perhaps apply to first or last names?
+  // *** lower: false, means caps are not turned lowercase, all but numbers and letters are replaced via ' '
+  // username = slug(req.body.username, {replacement: ' ', lower: false});
   firstName = slug(firstName, {replacement: ' ', lower: false});
   lastName = slug(lastName, {replacement: ' ', lower: false});
 
@@ -103,17 +109,25 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
     avatarImage = editImgUrl;
   }
 
-  // *** slug should be optional?, purpose is to remove emojis, perhaps apply to first or last names?
-  // *** lower false means caps are not turned lowercase, all but numbers and letters are replaces vie ' '
-  // username = slug(req.body.username, {replacement: ' ', lower: false});
-
   let salt = await bcrypt.genSalt(11);
   let encryptedPassword = await bcrypt.hash(password, salt);
 
   let user = await new User({ firstName, lastName, username, email, avatarImage, avatarImageFilename, password: encryptedPassword, role });
   
-  // *** may not be needed
-  // const jwtToken = accessTokenGenerator(user._id, user.role);
+  console.log("user generated")
+  console.log(user)
+  let jwtAccessToken = accessTokenGenerator(user._id, user.role);
+  
+  console.log("cookie options")
+  let cookieOptions = accessTokenCookieOptions();
+
+  res.setHeader(
+    "Set-Cookie",
+    cookie.serialize("token", jwtAccessToken, cookieOptions)
+  );
+
+  // res.cookie('token', jwtAccessToken, cookieOptions);
+  console.log("cookie made")
   await user.save();
   await db.disconnect();
 
@@ -126,10 +140,6 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
   });
 });
 
-
-
-
-
 // handler.get(async (req, res) => {
 //   res.status(200).json({
 //     status: "User registered!"
@@ -137,4 +147,3 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
 // })
 
 export default handler;
-// const user = await User.findById(req.user.id).select('-password');
