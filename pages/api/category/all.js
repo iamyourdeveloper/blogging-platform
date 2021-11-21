@@ -12,11 +12,12 @@ import Post from '@/models/Post';
 // *** sllug is post / article id
 const handler = nc({onError, onNoMatch});
 
+// *** insomnia tested - passed
 handler.get(async (req, res) => {
   await db.connectToDB();
   const categories = await Post.find().distinct('category');
   await db.disconnect();
-  res.statusCode(200).json({
+  res.status(200).json({
     status: "Available categories.",
     data: {
       categories

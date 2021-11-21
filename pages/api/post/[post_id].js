@@ -26,9 +26,7 @@ handler.get(async (req, res) => {
   if (Array.isArray(postData.tags)) {
     postData.tags = postData.tags.join(', ');
   }
-  if (Array.isArray(postData.themes)) {
-    postData.themes = postData.themes.join(', ');
-  }
+  
   res.status(200).json({
     status: "Post retrieved.",
     data: {

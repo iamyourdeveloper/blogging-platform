@@ -37,4 +37,8 @@ const storage = new CloudinaryStorage({
     // }
   }
 });
-module.exports = { cloudinary, storage };
+
+const removeOnErr = async (filename) => {
+  await cloudinary.uploader.destroy(filename);
+};
+module.exports = { cloudinary, storage, removeOnErr };

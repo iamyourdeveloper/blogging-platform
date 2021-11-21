@@ -17,6 +17,9 @@ const ProfileSchema = new mongoose.Schema({
   backgroundImageFilename: {
     type: String
   },
+  themes: {
+    type: [String]
+  },
   // skills: {
   //   type: [String]
   // },
@@ -48,7 +51,9 @@ const ProfileSchema = new mongoose.Schema({
   },
 }, {timestamps: true});
 
-module.exports = mongoose.model('Profile', ProfileSchema);
+const Profile = mongoose.models.Profile || mongoose.model('Profile', ProfileSchema);
+export default Profile;
+// module.exports = mongoose.model('Profile', ProfileSchema);
 // updatedAt: {
 //   type: String, 
 //   default: Date.now()

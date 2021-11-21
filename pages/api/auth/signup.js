@@ -1,12 +1,11 @@
 import nc from 'next-connect';
-// import * as yup from 'yup';
 import bcrypt from 'bcryptjs';
 import cookie from 'cookie';
 import slug from 'slug';
 import multer from 'multer';
 import { onError, onNoMatch } from '@/utils/ncOptions';
 import db from '@/utils/database';
-import { storage } from '@/utils/cloudinary';
+import { storage, removeOnErr } from '@/utils/cloudinary';
 // import yupValidator from '@/utils/validate';
 // import { userRegisterSchema, yupValidator } from '@/utils/validateSchemas';
 import { accessTokenGenerator, accessTokenCookieOptions } from '@/utils/jwtGenerator';
@@ -47,12 +46,21 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
   console.log(password);
 
   if (firstName && typeof firstName !== 'string') {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(403).json({ errors: [{ msg: 'Invalid credentials.' }] });
   };
   if (lastName && typeof lastName !== 'string') {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(403).json({ errors: [{ msg: 'Invalid credentials.' }] });
   };
   if (username && typeof username !== 'string') {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(403).json({ errors: [{ msg: 'Invalid credentials.' }] });
   };
 
@@ -64,17 +72,26 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
 
   console.log("checking passwords")
   if (password !== password2) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(400).send([{ errors: [{ msg: "Passwords do not match." }] }]);
   };
 
   console.log("checking email")
   if (!email || !email.includes('@')) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     console.log(email)
     return res.status(400).send({ errors: [{ msg: "Invalid credentials." }] });
   }
 
   console.log("checking username")
   if (!username) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(403).json({ errors: [{ msg: 'Invalid credentials.' }] });
   };
 
@@ -88,12 +105,18 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
   const findUserByEmail = await User.findOne({ email });
 
   if (findUserByEmail) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(403).json({ errors: [{ msg: "User email already exists!"}] });
   };
 
   const findUserByUsername = await User.findOne({ username });
 
   if (findUserByUsername) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(403).json({ errors: [{ msg: "Username already exists!"}] });
   };
 

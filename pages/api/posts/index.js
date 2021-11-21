@@ -5,6 +5,7 @@ import User from '@/models/User';
 import Post from '@/models/Post';
 
 // *** interact with search bar right from the initial homepage of the site, get all blog posts
+// *** sort via various url queries: username, tagname, etc.
 // / <-FE
 // /api/posts/index <- BE
 const handler = nc({onError, onNoMatch});
@@ -12,10 +13,10 @@ const handler = nc({onError, onNoMatch});
 handler.get(async (req, res) => {
   const {
     // user_id,
-    username, // used with id, user page
+    // username, // used with id, user page
     category,
     tag,
-    keyword,
+    keyword, // used to find post by title or usename
     pageNumber,
     offsetItems
   } = req.query;

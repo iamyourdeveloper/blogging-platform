@@ -2,12 +2,17 @@ import nc from 'next-connect';
 import multer from 'multer';
 import { v2 as cloudinary } from 'cloudinary';
 import { onError, onNoMatch } from '@/utils/ncOptions';
+import { verifAuth, authRole } from '@/utils/verifAuth';
 import db from '@/utils/database';
-import { storage } from '@/utils/cloudinary';
-import validate from '@/utils/validate';
-import postSchema from '@/utils/validateSchemas';
+import { storage, removeOnErr } from '@/utils/cloudinary';
 import User from '@/models/User';
 import Post from '@/models/Post';
+
+export const config = {
+  api: {
+    bodyParser: false,
+  },
+};
 
 const upload = multer({
   storage,
@@ -21,39 +26,53 @@ const upload = multer({
 }); //3MB
 
 const handler = nc({onError, onNoMatch});
-// handler.use(auth); // auth validation, ensure correct user role for access
+handler.use(verifAuth, authRole);
 
-// handler.use(isAuth, isAdmin);
-
-// *** update Post
-handler.use(isAuth, admin, upload.single('image_url'), validate(postSchema)).put(async (req, res) => {
+// update Post
+// *** insomnia tested - passed
+handler.use(upload.single('image_url')).put(async (req, res) => {
   const { post_id } = req.query;
-  const { title, text, category, tags, themes } = req.body;
+  const { title, text, category, tags } = req.body;
   let imageUrl = '';
   let imageFilename = '';
   // let categoryToArr;
   let tagsToArr;
-  let themesToArr;
   let postDataCheck;
   let postFields;
   
   if (!title) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(400).json({ errors: [{ msg: 'Title is required.' }] });
   }
   if (!text) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(400).json({ errors: [{ msg: 'Text is required.' }] });
   }
 
   await db.connectToDB();
   const user = await User.findById(req.user.id).select('-password');
-
+  
   if (!user) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(403).json({ errors: [{ msg: "No user was found. Please sign in. "}] });
   }
 
-  // postDataCheck = { categories, tags, themes };
-  postDataCheck = { tags, themes };
-  
+  const postExists = await Post.findById(post_id);
+  if (!postExists) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
+    return res.status(403).json({ errors: [{ msg: "No post found. "}] });
+  }
+
+  postDataCheck = { tags };
+
   for (const [key, value] of Object.entries(postDataCheck)) {
     if (!value) {
       postDataCheck[key] = ''; // console.log(value);
@@ -61,26 +80,19 @@ handler.use(isAuth, admin, upload.single('image_url'), validate(postSchema)).put
   }
 
   let postChecked = Object.values(postDataCheck);
-  // [categoriesChk, tagsChk, themesChk] = postChecked;
-  [tagsChk, themesChk] = postChecked;
+  let [tagsChk] = postChecked;
 
-  // if (typeof categoriesChk === "string") {
-  //   categoriesToArr = categoriesChk.split(',').map(category => '' + category.trim());
-  // };
   if (typeof tagsChk === "string") {
     tagsToArr = tagsChk.split(',').map(tag => '' + tag.trim());
   };
-  if (typeof themesChk === "string") {
-    themesToArr = themesChk.split(',').map(theme => '' + theme.trim());
-  };
 
   if (req.file && req.file.path) {
-    coverImage = req.file.path;
-    coverImageFilename = req.file.filename;
+    imageUrl = req.file.path;
+    imageFilename = req.file.filename;
   }
 
   // if storeing with diskstorage setup for multer
-  if (coverImage.startsWith('public\\')) {
+  if (imageUrl.startsWith('public\\')) {
     let editImgUrl = coverImage.slice(6);
     coverImage = editImgUrl;
   }
@@ -106,8 +118,7 @@ handler.use(isAuth, admin, upload.single('image_url'), validate(postSchema)).put
         title: title,
         text: text,
         category,
-        tags: tagsToArr,
-        themes: themesToArr    
+        tags: tagsToArr    
       };
     }
   }
@@ -123,8 +134,7 @@ handler.use(isAuth, admin, upload.single('image_url'), validate(postSchema)).put
       title: title,
       text: text,
       category,
-      tags: tagsToArr,
-      themes: themesToArr    
+      tags: tagsToArr    
     };
   }
   
@@ -144,22 +154,36 @@ handler.use(isAuth, admin, upload.single('image_url'), validate(postSchema)).put
   });
 });
 
-// *** delete post
-handler.use(isAuth, admin).delete(async (req, res) => {
+// delete post
+// *** insomnia tested - passed
+handler.delete(async (req, res) => {
   const { post_id } = req.query;
   await db.connectToDB();
   const post = await Post.findById(post_id);
 
   if (!post) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(403).json({ errors: [{ msg: "Unable to find post."}] });
   }
 
   if (post.user.toString() !== req.user.id) {
+    if (req.file) {
+      await removeOnErr(req.file.filename);
+    }
     return res.status(401).json({ errors: [{ msg: "User not authorized." }] });
   }
+
+  // access the cloudinary api, destroy image currently saved
+  if (post.coverImageFilename) {
+    await cloudinary.uploader.destroy(post.coverImageFilename);
+  }
+
   await post.remove();
   await db.disconnect();
   res.status(201).json({
     status: "Post deleted.",
   });
 });
+export default handler;

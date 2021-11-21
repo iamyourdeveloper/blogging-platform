@@ -1,22 +1,27 @@
-import nc from 'next-coonnect';
+import nc from 'next-connect';
 import { onError, onNoMatch } from '@/utils/ncOptions';
+import { verifAuth, authRole } from '@/utils/verifAuth';
 import db from '@/utils/database';
 import User from '@/models/User';
 import Profile from '@/models/Profile';
 
-// *** get user profile
 const handler = nc({onError, onNoMatch});
 
-handler.get(async (req, res) => {
+// get user profile
+// *** insomnia tested - passed
+handler.use(verifAuth).get(async (req, res) => {
   const { user_id } = req.query;
+  console.log("user_id")
+  console.log(user_id)
   await db.connectToDB();
-  const user = User.findById(user_id, 'username email avatarImage timestamps');
+  const user = await User.findById(user_id).select('username email avatarImage');
 
   if (!user) {
-    return res.status(404).json({ errors: [{ msg: "User not found."}] });
+    return res.status(401).json({ errors: [{ msg: "User unauthenticated."}] });
   }
 
-  const profile = await Profile.findById(user_id, "bio location backgroundImage social");
+  const profile = await Profile.findOne({user: user_id}).select("bio location backgroundImage social");
+  await db.disconnect();
 
   res.status(200).json({
     status: "User information found.",
@@ -24,5 +29,5 @@ handler.get(async (req, res) => {
       user, profile
     }
   })
-  await db.diconnect();
 });
+export default handler;

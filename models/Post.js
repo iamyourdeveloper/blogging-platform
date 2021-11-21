@@ -5,6 +5,7 @@ const PostSchema = new mongoose.Schema({
     ref: 'User',
     required: true
   },
+  // user: { type: mongoose.Schema.Types.ObjectId, ref: 'User', required: true },
   username: {
     type: String,
     required: true
@@ -32,20 +33,20 @@ const PostSchema = new mongoose.Schema({
   tags: {
     type: [String]
   },
-  themes: {
-    type: [String]
-  },
+  // themes: {
+  //   type: [String]
+  // },
   likes: [
     {
       user: {
-        type: Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId
       },
     }
   ],
   comments: [
     {
       user: {
-        type: Schema.Types.ObjectId
+        type: mongoose.Schema.Types.ObjectId
       },
       text: {
         type: String,
@@ -65,7 +66,9 @@ const PostSchema = new mongoose.Schema({
   ],
 }, {timestamps: true});
 
-module.exports = mongoose.model('Post', PostSchema);
+const Post = mongoose.models.Post || mongoose.model('Post', PostSchema);
+export default Post;
+// module.exports = mongoose.model('Post', PostSchema);
 
 // updatedAt: {
 //   type: String, 

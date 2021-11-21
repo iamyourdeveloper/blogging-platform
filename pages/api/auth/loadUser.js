@@ -25,6 +25,7 @@ handler.use(verifAuth, authRole).get(async (req, res) => {
     status: "User found.",
     data: {
       user: {
+        _id: user._id,
         firstname: user.firstName,
         lastname: user.lastName,
         username: user.lastName,

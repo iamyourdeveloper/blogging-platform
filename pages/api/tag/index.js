@@ -1,26 +1,25 @@
 import nc from 'next-connect';
-import { ncOnError } from '../../utils/ncOptions';
-import { connectToDB } from '../../../utils/database';
-// import { findUserById, }
-const { db } = await connectToDB();
+import { onError, onNoMatch } from '@/utils/ncOptions';
+import db from '@/utils/database';
+import Post from '@/models/Post';
+
 // TODO --- consider deleting this file, tags will be sorted in the front end search OR in /api/posts/index.js
-// ROUTE
-// /api/[username]/
 
 // get all posts user made on blog, essentially a feed
-const handler = nc(ncOnError);
-// handler.use(connectToDB)
-// handler.use(auth); // auth validation, ensure correct user role for access
+const handler = nc({onError, onNoMatch});
 
 handler.get(async (req, res) => {
+  const userPosts = await Post.find({})
   // const user = await db.collection("posts").find({}).sort({ date: -1 }).toArray();
   // pagination
   // *** Build pagination?
-  const userPosts = await db.collection("posts").find({}).sort({ date: -1 }).limit(20).toArray();
+  // const userPosts = await db.collection("posts").find({}).sort({ date: -1 }).limit(20).toArray();
 
 
-  res.statusCode(200).json({
+  res.status(200).json({
     status: "User posts found.",
-    data: userPosts
+    data: {
+      posts: userPosts
+    }
   });
 });

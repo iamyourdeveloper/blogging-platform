@@ -27,7 +27,9 @@ function accessTokenCookieOptions() {
       expires: new Date(Date.now() + 7*24*60*60*1000), //7d
       secure: NODE_ENV === 'production' ? true : false,
       httpOnly: NODE_ENV === 'production' ? true : false,
-      sameSite: 'strict'
+      sameSite: 'strict',
+      // "/" access whole app
+      path: '/'
   }
 };
 

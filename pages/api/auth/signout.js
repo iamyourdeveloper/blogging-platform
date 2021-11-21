@@ -15,7 +15,7 @@ handler.post(async (req, res) => {
   }
   res.setHeader(
     "Set-Cookie",
-    cookie.serialize("token", '', { expires: new Date(1) })
+    cookie.serialize("token", '', { expires: new Date(1), path: '/' })
   );
   // res.cookie('token', '', { expires: new Date(1) });
   res.send({ success: "Logged out successfully!" });
