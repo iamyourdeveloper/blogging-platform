@@ -14,9 +14,9 @@ handler.get(async (req, res) => {
   const {
     // user_id,
     // username, // used with id, user page
+    keyword, // used to find post by title or usename
     category,
     tag,
-    keyword, // used to find post by title or usename
     pageNumber,
     offsetItems
   } = req.query;

@@ -10,9 +10,10 @@ import Post from '@/models/Post';
 const handler = nc({onError, onNoMatch});
 
 handler.get(async (req, res) => {
+  // const { username } = req.params;
   const {
-    user_id,
-    // username, // used with id, user page
+    // user_id,
+    username, // used with id, user page
     category,
     tag,
     keyword,
@@ -45,7 +46,8 @@ handler.get(async (req, res) => {
 
   const keywordFilter = keywordRGX && keywordRGX !== 'null' ? {
     $and: [
-      {user: user_id},
+      // {user: user_id},
+      {user: username},
       {title: { $regex: keywordRGX, $options: "i" }}
     ]
   } : {};
