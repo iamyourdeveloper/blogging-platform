@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog page</title>
+    <link rel="stylesheet" href="../styles/blog.css">
+</head>
+
+<body>
+
+    <!-- Headings -->
+    <div class="blog-header">
+        <h1 class="header">Blogs</h1>
+        <h3 class="sub-header">Categories</h3>
+    </div>
+    <!-- Control buttons -->
+    <div id="myBtnContainer">
+        <button class="btn cate-btn  active" onclick="filterSelection('all')">All</button>
+        <button class="btn cate-btn " onclick="filterSelection('front')"> Front-end</button>
+        <button class="btn cate-btn " onclick="filterSelection('back')"> Back-end</button>
+        <button class="btn cate-btn " onclick="filterSelection('ai')"> AI</button>
+    </div>
+
+    <!-- The filterable elements. Note that some have multiple class names (this can be used if they belong to multiple categories) -->
+    <div class="container grid-blogs">
+        <div class="filterDiv back">
+            <div class="grid-col-item front">
+                <div class="blog-image">
+                    <div class="b-img-1"></div>
+                </div>
+                <div class="featured_info">
+                    <span>Blogs for everyone</span>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+                        ratione facilis animi voluptas exercitationem molestiae.
+                    </p>
+                </div>
+                <button class="btn" id="btn_blog">Read</button>
+            </div>
+
+        </div>
+        <div class="filterDiv colors front">
+            <div class="grid-col-item ">
+                <div class="blog-image">
+                    <div class="b-img-2"></div>
+                </div>
+                <div class="featured_info">
+                    <span>Blogs for everyone</span>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+                        ratione facilis animi voluptas exercitationem molestiae.
+                    </p>
+                </div>
+                <button class="btn" id="btn_blog">Read</button>
+            </div>
+        </div>
+
+        <div class="filterDiv ai">
+            <div class="grid-col-item">
+                <div class="blog-image">
+                    <div class="b-img-3"></div>
+                </div>
+                <div class="featured_info">
+                    <span>Blogs for everyone</span>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+                        ratione facilis animi voluptas exercitationem molestiae.
+                    </p>
+                </div>
+                <button class="btn" id="btn_blog">Read</button>
+            </div>
+        </div>
+
+        <div class="filterDiv colors front">
+            <div class="grid-col-item">
+                <div class="blog-image">
+                    <div class="b-img-4"></div>
+                </div>
+                <div class="featured_info">
+                    <span>Blogs for everyone</span>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+                        ratione facilis animi voluptas exercitationem molestiae.
+                    </p>
+                </div>
+                <button class="btn" id="btn_blog">Read</button>
+            </div>
+        </div>
+
+        <div class="filterDiv cars back">
+            <div class="grid-col-item ">
+                <div class="blog-image">
+                    <div class="b-img-5"></div>
+                </div>
+                <div class="featured_info">
+                    <span>Blogs for everyone</span>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+                        ratione facilis animi voluptas exercitationem molestiae.
+                    </p>
+                </div>
+                <button class="btn" id="btn_blog">Read</button>
+            </div>
+        </div>
+
+        <div class="filterDiv ai back">
+            <div class="grid-col-item front">
+                <div class="blog-image">
+                    <div class="b-img-6"></div>
+                </div>
+                <div class="featured_info">
+                    <span>Blogs for everyone</span>
+                    <p>
+                        Lorem ipsum dolor sit amet consectetur adipisicing elit. Tempore
+                        ratione facilis animi voluptas exercitationem molestiae.
+                    </p>
+                </div>
+                <button class="btn" id="btn_blog">Read</button>
+            </div>
+        </div>
+    </div>
+
+    <script src="filter.js"></script>
+</body>
+
+</html>

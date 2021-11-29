@@ -1,3 +1,5 @@
+@import "css.scss";
+
 html,
 
 :root{
@@ -49,13 +51,17 @@ button {
   width: 100%;
 }
 
+
+
 section:nth-of-type(1){
   background-image: url(../img/blogging2.jpg);
   background-repeat: no-repeat;
   background-size: cover;
 }
 
+
 .blog-card {
+
   width: 100%;
   padding: 1.5rem;
 
@@ -584,21 +590,14 @@ input:focus{
   margin-bottom: 1.75rem;
 }
 
-.category-btn{
+#category-btn{
   display:flex;
   justify-content:center;
 
   
 }
 
-.c-buttons{
-
-  flex-wrap: wrap;
-  
-
-}
-
-#cate-btn{
+.cate-btn{
 
   margin-top: 1rem;
   margin-right: 10px;
@@ -606,7 +605,7 @@ input:focus{
   border-radius:5px;
 }
 
-#cate-btn:nth-last-of-type(1){
+.cate-btn:nth-last-of-type(1){
   margin-right: 0;
 }
 
