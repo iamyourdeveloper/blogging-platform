@@ -14,7 +14,7 @@ import User from '@/models/User';
 // needed to decrypt req.body
 export const config = {
   api: {
-    bodyParser: false,
+    bodyParser: true,
   },
 };
 
@@ -38,6 +38,10 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
   // req.file produced by multer after uploading to cloudinary
   // path = secure_url / filename = public_id
   let { firstName, lastName, username, email, password, password2 } = req.body;
+  console.log("****** req.body ******")
+  console.log(req.body)
+  console.log("req.body.image_url")
+  console.log(req.body.image_url)
   // JSON.parse(req.body)
   console.log(firstName);
   console.log(lastName);
@@ -139,6 +143,7 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
   
   console.log("user generated")
   console.log(user)
+  // ?? breaks here
   let jwtAccessToken = accessTokenGenerator(user._id, user.role);
   
   console.log("cookie options")
@@ -154,12 +159,20 @@ handler.use(upload.single('image_url')).post(async (req, res) => {
   await user.save();
   await db.disconnect();
 
+  if (user.password) {
+    console.log(user.password)
+    user.password = undefined;
+    console.log("==============")
+    console.log(user.password)
+  }
+  console.log("user - final check")
+  console.log(user)
   return res.status(201).json({
     status: "User registered!",
     // TODO; after registration, redirect to sign in
-    data: { valid: true }
+    // data: { valid: true }
     // data: { token: jwtToken }
-    // data: { user }
+    data: { user }
   });
 });
 

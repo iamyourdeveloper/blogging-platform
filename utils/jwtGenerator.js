@@ -60,34 +60,3 @@ async function verifyPassword(password, hashedPassword) {
 };
 
 module.exports = { accessTokenGenerator, getAccessTokenHeaders, validateAccessTokenCookie, accessTokenCookieOptions, verifyPassword };
-
-// exports.refreshToken = () => {
-  // call to axios.post('users/refresh-token');
-  // find usser credentials in db, bu user id, generate refresh token for that user, update db (place token into it) then call to:
-  // startRefreshTokenTimer();
-  // return;
-// }
-
-
-/*
-// helper functions
-let refreshTokenTimeout;
-function startRefreshTokenTimer() {
-  // parse json object from base64 encoded jwt token
-  const jwtToken = JSON.parse(atob(userSubject.value.jwtToken.split('.')[1]));
-  // set a timeout to refresh the token a minute before it expires
-  const expires = new Date(jwtToken.exp * 1000);
-  const timeout = expires.getTime() - Date.now() - (60 * 1000);
-  refreshTokenTimeout = setTimeout(refreshToken, timeout);
-}
-function stopRefreshTokenTimer() {
-  clearTimeout(refreshTokenTimeout);
-}
-return jwt.sign(
-  payload, JWT_REFRESH_SECRET, { expiresIn: '7 days' },
-  (err, token) => {
-    if (err) throw err;
-    // reject(createError.InternalServerError());
-  }
-);
-*/

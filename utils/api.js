@@ -1,4 +1,3 @@
-// require('dotenv').config();
 import Axios from 'axios';
 
 const api = Axios.create({
@@ -12,49 +11,23 @@ const api = Axios.create({
     // 'Content-Type': 'application/json',
     // 'Content-Type': 'multipart/form-data'
   // },
+  withCredentials: true,
   credentials: 'include',
 });
 
-// api.interceptors.request.use(
-//   function (config) {
-//     const token = localStorage.getItem("token");
-//     if (token) {
-//       config.headers["Authorization"] = "Bearer " + token;
-//     }
-//     return config;
-//   },
-//   function (error) {
-//     return Promise.reject(error);
-//   }
-// );
-// ##################################################
-// ##################################################
-/*
-// takes token from auth action, if there, add it to Authorization headers, if not - delete header
-import api from './api';
-
-// When we have a token, it's sent with every request.
-const setAuthToken = token => {
-  // console.log("token")
-  // console.log(token)
-  // token value derived from localstorage
-  if (token) {
-    // set global header to value of token passed in:
-    api.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-    // set token to LS
-    localStorage.setItem('token', token);
-  } else {
-    // if token is expired (perhaps do a refresh, then continue with a second url request followed by setting the token into the header)
-    // if no token, delete global header
-    delete api.defaults.headers.common['Authorization'];
-    localStorage.removeItem('token');
+api.interceptors.request.use(
+  function (config) {
+    const token = localStorage.getItem("token");
+    if (token) {
+      config.headers["Authorization"] = "Bearer " + token;
+    }
+    return config;
+  },
+  function (error) {
+    return Promise.reject(error);
   }
-}
-// pass value back into (auth) actions
-export default setAuthToken;
-*/
-// ##################################################
-// ##################################################
+);
+
 // api.interceptors.response.use(
 //   res => res,
 //   err => {
@@ -66,15 +39,7 @@ export default setAuthToken;
 // );
 export default api;
 
-
-
-
-
-
-
-
-
-/* AUTHENTICATOR
+/* ROLE AUTHENTICATOR
 const jwt = require('jsonwebtoken');
 require('dotenv').config();
 const pool = require ('../config/db');

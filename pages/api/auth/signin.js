@@ -36,6 +36,15 @@ handler.post(async (req, res) => {
   const jwtAccessToken = accessTokenGenerator(user._id, user.role);
   const cookieOptions = accessTokenCookieOptions();
 
+  if (user.password) {
+    console.log(user.password)
+    user.password = undefined;
+    console.log("==============")
+    console.log(user.password)
+  }
+  console.log("user - final check")
+  console.log(user)
+
   res.setHeader(
     "Set-Cookie",
     cookie.serialize("token", jwtAccessToken, cookieOptions)
@@ -48,8 +57,8 @@ handler.post(async (req, res) => {
       // token: jwtToken,
       user: {
         _id: user._id,
-        // firstName: user.firstName,
-        // lastName: user.lastName,
+        firstName: user.firstName,
+        lastName: user.lastName,
         username: user.username,
         email: user.email,
         avatarImage: user.avatarImage,
