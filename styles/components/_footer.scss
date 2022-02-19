@@ -1,0 +1,19 @@
+.footer {
+  background: $secondaryBackgroundColor;
+  padding-top: 100px;
+  height: 350px;
+  & Main {
+    height: 200px;
+    @include flex(column, space-between, center);
+    .copyRight {
+      @include viewport-size(mobile-phone-small) {
+        text-align: center;
+      }
+      @include viewport-size(mobile-phone-med) {
+        text-align: center;
+      }
+      @include viewport-size(mobile-tablet-med) {
+      }
+    }
+  }
+}

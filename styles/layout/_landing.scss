@@ -1,0 +1,480 @@
+.landing {
+  // background-image: url("./../img/blogging2.jpg");
+  background-image: url("./../../img/blogging2.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  height: auto;
+  overflow-x: hidden;
+  margin-bottom: 200px;
+  .hero {
+    height: auto;
+    padding-top: 120px;
+    margin-bottom: 200px;
+    @include flex(row, space-between, center);
+
+    // @include viewport-size(mobile-phone-med){
+    //     @include flex(column, center, flex-start);
+    // }
+    @include viewport-size(mobile-phone-small) {
+      padding-top: 60px;
+      @include flex(column, center, flex-start);
+    }
+    @include viewport-size(mobile-phone-med) {
+      @include flex(column, center, flex-start);
+    }
+    @include viewport-size(mobile-tablet-med) {
+      @include flex(row, space-between, flex-start);
+    }
+    @include viewport-size(stardard) {
+      @include flex(row, space-between, center);
+    }
+    &Main {
+      width: 100%;
+      @include viewport-size(mobile-phone-small) {
+        text-align: center;
+      }
+      @include viewport-size(mobile-phone-med) {
+        text-align: initial;
+      }
+      @include viewport-size(standard) {
+        width: 100%;
+        text-align: initial;
+      }
+      &Heading {
+        font-weight: 300;
+        font-size: 75px;
+        line-height: 100px;
+        margin-bottom: 2.5rem;
+        @include viewport-size(mobile-phone-small) {
+          font-size: 28px;
+          line-height: 40px;
+          margin-bottom: 1rem;
+        }
+        @include viewport-size(mobile-phone-med) {
+          font-size: 45px;
+          line-height: 65px;
+          margin-bottom: 1.5rem;
+        }
+        @include viewport-size(mobile-tablet-small) {
+          font-size: 41px;
+          line-height: 53px;
+          margin-bottom: 1.5rem;
+        }
+        @include viewport-size(mobile-tablet-med) {
+          font-size: 41px;
+          line-height: 53px;
+          margin-bottom: 1.5rem;
+        }
+        @include viewport-size(mobile-tablet-large) {
+          font-size: 50px;
+          line-height: 70px;
+        }
+
+        @include viewport-size(med) {
+          font-size: 60px;
+          line-height: 85px;
+        }
+        @include viewport-size(standard) {
+          font-size: 75px;
+          line-height: 100px;
+        }
+      }
+      &Heading > span {
+        color: var(--la-heading);
+        font-weight: bold;
+      }
+      &SubText {
+        color: #334157;
+        font-size: 28px;
+        font-weight: 400;
+        line-height: 40px;
+        margin-bottom: 2rem;
+        @include viewport-size(mobile-phone-small) {
+          font-size: 17px;
+          font-weight: 300;
+          //width:290px;
+          line-height: 35px;
+        }
+        @include viewport-size(mobile-phone-med) {
+          font-size: 23px;
+          font-weight: 300;
+          //width:380px;
+          line-height: 35px;
+        }
+        @include viewport-size(mobile-tablet-med) {
+          font-size: 17px;
+          font-weight: 300;
+          //width:380px;
+          line-height: 30px;
+        }
+        @include viewport-size(mobile-tablet-large) {
+          font-size: 21px;
+          font-weight: 200;
+          line-height: 32px;
+          width: 450px;
+        }
+        @include viewport-size(standard) {
+          font-size: 26px;
+          font-weight: 300;
+          line-height: 40px;
+          width: 600px;
+        }
+      }
+      &Input {
+        background: transparent;
+        width: 400px;
+        height: 50px;
+        font-size: 1.3rem;
+        padding-left: 1.5rem;
+        border-radius: 8px;
+        border: 2px solid $primaryTypefaceColor;
+        margin-bottom: 2rem;
+        @include viewport-size(mobile-phone-small) {
+          width: 250px;
+          height: 40px;
+          margin-bottom: 1rem;
+        }
+        @include viewport-size(mobile-tablet-small) {
+          width: 300px;
+          height: 40px;
+          margin-bottom: 1rem;
+        }
+        @include viewport-size(mobile-tablet-med) {
+          width: 300px;
+          height: 40px;
+          margin-bottom: 1rem;
+        }
+        @include viewport-size(mobile-tablet-large) {
+          width: 400px;
+          height: 50px;
+          margin-bottom: 2rem;
+        }
+      }
+      &SignUp {
+        height: 70px;
+        padding-top: 1rem;
+        font-size: 1.5rem;
+        text-align: center;
+        border-radius: 10px;
+        @include viewport-size(mobile-phone-small) {
+          height: 50px;
+          padding-top: 5px;
+          font-size: 1.3rem;
+          margin: auto;
+        }
+        @include viewport-size(mobile-phone-med) {
+          height: 60px;
+          padding-top: 0.6rem;
+          margin: 0;
+        }
+        @include viewport-size(mobile-tablet-med) {
+          height: 60px;
+          padding-top: 0.6rem;
+          margin: 0;
+        }
+        @include viewport-size(mobile-tablet-med) {
+          height: 60px;
+          padding-top: 0.6rem;
+        }
+        @include viewport-size(mobile-tablet-large) {
+          height: 70px;
+          padding-top: 1rem;
+        }
+        .innerIcon {
+          margin-left: 1rem;
+          transform: translateY(5px);
+        }
+      }
+    }
+    &GraphicWrapper {
+      width: 100%;
+      height: 700px;
+      padding-left: 2rem;
+      @include viewport-size(mobile-phone-small) {
+        width: 100%;
+        height: 110px;
+        padding-left: 0rem;
+      }
+      @include viewport-size(mobile-phone-med) {
+        width: 100%;
+        height: 250px;
+        padding-left: 0rem;
+      }
+      @include viewport-size(mobile-tablet-med) {
+        width: 90%;
+        height: 450px;
+        padding-left: 0rem;
+      }
+      @include viewport-size(mobile-tablet-large) {
+        width: 100%;
+        height: 450px;
+      }
+      @include viewport-size(standard) {
+        width: 100%;
+        height: 450px;
+        padding-left: 2rem;
+      }
+    }
+  }
+}
+
+.highlights {
+  .grid {
+    @include viewport-size(mobile-phone-small) {
+      @include flex(column, center, center);
+    }
+    @include viewport-size(mobile-phone-med) {
+      @include flex(column, center, center);
+    }
+    @include viewport-size(mobile-tablet-med) {
+      @include flex(row, space-around, initial);
+      flex-wrap: wrap;
+    }
+    @include viewport-size(mobile-tablet-large) {
+      @include flex(row, space-around, initial);
+      flex-wrap: wrap;
+    }
+    @include viewport-size(med) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 435px)),
+        none,
+        center,
+        initial
+      );
+    }
+    @include viewport-size(standard) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 625px)),
+        none,
+        space-between,
+        initial
+      );
+    }
+    .gridItem {
+      @include viewport-size(mobile-phone-small) {
+        align-items: center;
+        text-align: center;
+        width: 400px;
+      }
+      @include viewport-size(mobile-phone-med) {
+        align-items: center;
+        text-align: center;
+        width: 400px;
+      }
+      @include viewport-size(mobile-tablet-large) {
+        width: 400px;
+      }
+      @include viewport-size(med) {
+        width: 400px;
+      }
+      @include viewport-size(standard) {
+        width: 460px;
+      }
+    }
+  }
+}
+
+.topBlogs {
+  text-align: center;
+  .grid {
+    @include viewport-size(mobile-tablet-med) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 350px)),
+        none,
+        space-between,
+        initial
+      );
+    }
+    @include viewport-size(mobile-tablet-large) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 400px)),
+        none,
+        space-between,
+        initial
+      );
+    }
+    @include viewport-size(med) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 450px)),
+        none,
+        initial,
+        initial
+      );
+    }
+    @include viewport-size(standard) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 625px)),
+        none,
+        initial,
+        initial
+      );
+      :nth-child(even) {
+        > div {
+          height: 650px;
+        }
+      }
+    }
+    &Item {
+      @include viewport-size(mobile-tablet-med) {
+        width: 350px;
+        > div {
+          height: 350px;
+        }
+      }
+      @include viewport-size(mobile-tablet-large) {
+        width: 400px;
+        > div {
+          height: 450px;
+        }
+      }
+      @include viewport-size(med) {
+        width: 400px;
+      }
+      @include viewport-size(standard) {
+        width: 460px;
+      }
+    }
+  }
+}
+
+.themes {
+  text-align: center;
+
+  .grid {
+    @include viewport-size(mobile-phone-med) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 393px)),
+        none,
+        initial,
+        initial
+      );
+      &Item {
+        align-items: center;
+      }
+    }
+    @include viewport-size(mobile-tablet-med) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 393px)),
+        none,
+        initial,
+        initial
+      );
+      &Item {
+        align-items: center;
+      }
+    }
+    @include viewport-size(mobile-tablet-large) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 340px)),
+        none,
+        initial,
+        initial
+      );
+    }
+    @include viewport-size(med) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 340px)),
+        none,
+        initial,
+        initial
+      );
+    }
+    @include viewport-size(standard) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 470px)),
+        none,
+        initial,
+        initial
+      );
+    }
+  }
+
+  margin-bottom: 100px;
+}
+
+.active_reg {
+  text-align: center;
+  background: $secondaryBackgroundColor;
+  padding: 100px 0;
+  margin-bottom: 100px;
+  .grid {
+    margin-bottom: 100px;
+    @include viewport-size(mobile-tablet-med) {
+      @include flex(row, space-between, center);
+      flex-wrap: wrap;
+    }
+    @include viewport-size(mobile-tablet-large) {
+      @include flex(row, space-between, center);
+      flex-wrap: wrap;
+    }
+    @include viewport-size(med) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 455px)),
+        none,
+        initial,
+        initial
+      );
+    }
+    @include viewport-size(standard) {
+      @include grid(
+        repeat(auto-fill, minmax(min-content, 640px)),
+        none,
+        initial,
+        initial
+      );
+    }
+  }
+  .gridItem {
+    margin-bottom: 0rem;
+    &ImageWrapper {
+      width: 150px;
+      height: 150px;
+      margin: auto;
+      border-radius: 50%;
+      background: $white;
+      filter: drop-shadow(0px 5.4px 3px #242d52);
+      position: relative;
+      margin-bottom: 3rem;
+      .gridItemImage {
+        object-fit: contain;
+        object-position: center;
+        position: absolute;
+      }
+    }
+    &Heading {
+      align-self: center;
+    }
+  }
+}
+
+.testimonials {
+  background: $white;
+  text-align: center;
+  margin-bottom: 200px;
+  .landingHeading {
+    margin-bottom: 3rem;
+  }
+  .testimonial {
+    text-align: center;
+    &Text {
+      margin: auto;
+      font-weight: 400;
+      @include viewport-size(mobile-phone-small) {
+        width: 300px;
+        font-size: 1.3rem;
+      }
+      @include viewport-size(mobile-phone-med) {
+        width: 500px;
+      }
+      @include viewport-size(mobile-tablet-med) {
+        width: 500px;
+      }
+      @include viewport-size(mobile-tablet-large) {
+        width: 500px;
+      }
+      @include viewport-size(standard) {
+      }
+    }
+    margin-bottom: 3rem;
+  }
+}

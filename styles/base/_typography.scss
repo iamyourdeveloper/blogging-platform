@@ -1,0 +1,44 @@
+.landingHeading {
+  font-size: 1.8rem;
+  margin-bottom: 1.5rem;
+  @include viewport-size(mobile-phone-small) {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+  @include viewport-size(standard) {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+}
+.landingSubHeading {
+  font-size: 1.3rem;
+  margin-bottom: 5rem;
+  @include viewport-size(mobile-phone-small) {
+    font-size: 1.2rem;
+    font-weight: 400;
+    margin-bottom: 100px;
+  }
+  @include viewport-size(standard) {
+    font-size: 1.8rem;
+    margin-bottom: 1.5rem;
+  }
+}
+
+.profileField__label {
+  font-size: 2.2rem;
+  font-weight: 300;
+  margin-bottom: 1rem;
+}
+.profileField__value {
+  font-size: 2.8rem;
+  font-weight: 500;
+}
+
+.aside {
+  .navItemText {
+    font-size: 2.5rem;
+    font-weight: 700;
+    column-gap: 2.5rem;
+    @include flex(row, flex-start, center);
+  }
+}

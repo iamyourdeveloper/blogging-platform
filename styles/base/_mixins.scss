@@ -1,0 +1,38 @@
+@mixin flex($direction, $justify, $align) {
+  display: flex;
+  flex-direction: $direction;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+@mixin grid($cols, $rows, $justify, $align) {
+  display: grid;
+  grid-template-columns: $cols;
+  grid-template-rows: $rows;
+  justify-content: $justify;
+  align-items: $align;
+}
+
+$viewport-increase: (
+  // "Device-Not-Suppoerted":15.99rem, // Anything small we don't support
+  // "mobile-phone-small":16rem, // 20rem x 16 = 320px --> iphone5s/SE
+  // "mobile-phone-small-med":23.4375em,
+  // "mobile-phone-med":35.875rem, //25.875rem = 414px
+  // "mobile-tablet-med":58rem, //48rem = 768px
+  // "mobile-tablet-large":74rem, // 64rem = width 1024px
+  // "med": 95.375rem, //85.375rem = Width 1366px
+  // "med-standard": 100rem, //90rem = Width 1440px
+  // "standard":130rem, // 120rem = Width 1920px
+  // "large": 160em ,
+  // "xlarge":240em
+  "xxs": 20rem,
+  "lg": 90rem,
+  "xl": 120rem,
+  "xxl": 160rem
+);
+
+@mixin viewport-size($size) {
+  @media (min-width: map-get($viewport-increase , $size)) {
+    @content;
+  }
+}

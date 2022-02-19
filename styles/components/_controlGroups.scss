@@ -1,0 +1,32 @@
+.control-group{
+  margin-bottom:10px;
+  .login-field{
+    text-align: left;
+    background-color:#f5d8dd;
+    border: 1px solid #444;
+    border-radius: 3px;
+    font-size: 15px;
+    font-weight:200;
+    padding: 10px 0 10px .5rem;
+    /* width:250px; */
+    transition: .3s;
+  }
+  .login-field:focus{
+    /* border: 1px solid #3498db; */
+    padding: 10px 0;
+    border: none;
+    border-bottom: 2px solid #444;
+    border-radius: 0;
+    outline: none;    
+  }
+  &-gender{
+    @include flex(row, space-evenly, initial);
+    margin-bottom:10px;
+    .genderInput{
+      margin-top:5px;
+    }
+  }
+  &-upload{
+    display:block;
+  }
+}

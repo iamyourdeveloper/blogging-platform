@@ -1,0 +1,59 @@
+.nav {
+  height: 70px;
+  @include flex(row, space-between, center);
+  &Title {
+    justify-self: flex-start;
+    font-size: 2.5rem;
+  }
+  @include viewport-size(mobile-phone-small) {
+    @include flex(row, space-between, center);
+    &Menu {
+      display: none;
+    }
+  }
+  // @include viewport-size(mobile-phone-med){
+  //      @include flex(row, space-evenly, center);
+  //      &Menu{
+  //         display:none;
+  //     }
+  // }
+  @include viewport-size(mobile-tablet-med) {
+    &Menu {
+      @include flex(row, space-between, center);
+      &Item {
+        color: $primaryTypefaceColor;
+        font-size: 1.5rem;
+        font-weight: 400;
+        padding: 1rem;
+      }
+    }
+  }
+
+  // @include viewport-size(mobile-tablet-large){
+  //      &Menu{
+  //         @include flex(row, space-between, center);
+  //         &Item{
+  //             color:$la-heading;
+  //             font-size: 1.5rem;
+  //             font-weight: 400;
+  //             padding:1rem;
+  //         }
+
+  //     }
+  // }
+
+  @include viewport-size(standard) {
+    padding-left: 0;
+    width: 100%;
+    @include flex(row, space-between, center);
+    &Menu {
+      @include flex(row, space-between, center);
+      &Item {
+        color: $primaryTypefaceColor;
+        font-size: 1.5rem;
+        font-weight: 400;
+        padding: 1rem 2.5rem;
+      }
+    }
+  }
+}

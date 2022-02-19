@@ -1,0 +1,48 @@
+.gridItem{
+  height:auto;
+  margin-bottom:100px;
+  @include viewport-size(mobile-tablet-med){}
+  @include viewport-size(mobile-tablet-large){}
+  @include viewport-size(med){}
+  @include viewport-size(standard){}
+  @include flex(column, flex-start, flex-start);
+  position: relative;
+  & Icon{
+    margin-bottom:1rem;
+  }
+  & Heading{
+    font-size: 1.8rem;
+    padding-top:1rem;
+    margin-bottom:1rem;
+  }
+  & Image{
+    border-radius: 10px;
+  }
+  & Description{
+    font-size: 1.3rem;
+    line-height: 1.3;
+    text-align: left;
+    
+    @include viewport-size(mobile-tablet-med){}
+    @include viewport-size(mobile-tablet-large){}
+    @include viewport-size(med){
+        // width:450px;
+    }
+    @include viewport-size(standard){
+        // width:500px;
+    }
+  }
+  & Text{
+    width:400px;
+    font-size: 1.2rem;
+    @include viewport-size(mobile-phone-small){
+        width: 300px;
+    }
+    @include viewport-size(mobile-tablet-med){
+        width: 357px;
+    }
+    @include viewport-size(standard){
+        width:400px;
+    }
+  }
+}

@@ -1,0 +1,8 @@
+.aside {
+  width: 300px;
+  @include flex(column, flex-start, center);
+  .navMenuItem {
+    width: 100%;
+    margin-bottom: 2rem;
+  }
+}

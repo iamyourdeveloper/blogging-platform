@@ -1,0 +1,69 @@
+.searchBar {
+  font-size: 1rem;
+  transition: all 0.5s ease-in-out;
+  @include flex(row, center, center);
+  &TextInput {
+    border: none;
+    border-radius: 20px;
+    width: 320px;
+    padding-left: 6rem;
+    height: 40px;
+    border: 1px solid $secondaryTypefaceColor;
+    @include viewport-size(mobile-phone-med) {
+      width: 50px;
+      color: transparent;
+      padding-left: 1rem;
+      ::placeholder {
+        opacity: 0;
+      }
+    }
+
+    @include viewport-size(mobile-phone-small) {
+      width: 50px;
+      color: transparent;
+      padding-left: 1rem;
+      ::placeholder {
+        opacity: 0;
+      }
+    }
+    @include viewport-size(mobile-tablet-med) {
+      width: 50px;
+      color: transparent;
+      padding-left: 1rem;
+      ::placeholder {
+        opacity: 0;
+      }
+    }
+    @include viewport-size(mobile-tablet-large) {
+      width: 250px;
+      padding-left: 3rem;
+    }
+    @include viewport-size(med) {
+      width: 320px;
+      padding-left: 6rem;
+    }
+    @include viewport-size(standard) {
+    }
+  }
+  #searchBarMagnifier {
+    transform: translateX(35px);
+    pointer-events: none;
+  }
+  #searchBarClose {
+    transform: translateX(-35px) rotate(45deg);
+    opacity: 0;
+  }
+
+  &TextInput:focus {
+    border: none;
+    border-radius: 20px;
+    width: 500px;
+    padding-left: 3rem;
+    color: #334157;
+  }
+
+  &TextInput:focus + #searchBarClose {
+    transform: translateX(-35px) rotate(45deg);
+    opacity: 1;
+  }
+}
