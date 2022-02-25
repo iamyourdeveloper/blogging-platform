@@ -31,26 +31,27 @@ const upload = multer({
 const handler = nc({onError, onNoMatch});
 handler.use(verifAuth, authRole);
 
-// update profile
+// create user profile
 // *** insomnia tested - passed
-handler.use(upload.single('image_url')).put(async(req, res) => {
-  const { user_id } = req.query;
-  console.log("updating profile")
-  let { bio, location, themes, website, youtube, twitter, linkedin, instagram, reddit, github } = req.body;
-  console.log("req.body")
-  console.dir(bio)
-  console.dir(location)
-  console.dir(themes)
-  console.dir(website)
-  console.dir(reddit)
-  console.dir(github)
+handler.use(upload.single('image_url')).post(async(req, res) => {
+  const { id } = req.user;
+  // const { user_id } = req.query;
+  let { bio, location, themes, website, youtube, facebook, twitter, linkedin, instagram, reddit, github } = req.body;
   let imageUrl = '';
   let imageFilename = '';
-  let profileFields;
   let themesToArr;
 
   await db.connectToDB();
-  const user = await User.findById(user_id).select("-password");
+  // const user = await User.findById(user_id).select("-password");
+  const user = await User.findById(id).select("-password");
+
+  console.log("user")
+  console.log(user)
+  // const profileExists = await Profile.findOne({user: user_id}).select("_id");
+  const profileExists = await Profile.findOne({user: id}).select("_id");
+
+  console.log("profileExists")
+  console.log(profileExists)
 
   if (!user) {
     if (req.file) {
@@ -58,17 +59,12 @@ handler.use(upload.single('image_url')).put(async(req, res) => {
     }
     return res.status(403).json({ errors: [{ msg: "User not found. Sign in."}] });
   };
-
-  const profileExists = await Profile.findOne({user: user_id}).select("_id");
-
-  console.log("profileExists")
-  console.log(profileExists)
   
-  if (!profileExists) {
+  if (profileExists) {
     if (req.file) {
       await removeOnErr(req.file.filename);
     }
-    return res.status(403).json({ errors: [{ msg: "User profile not found."}] });
+    return res.status(403).json({ errors: [{ msg: "User profile already exists."}] });
   }
 
   if (req.file && req.file.path) {
@@ -80,10 +76,8 @@ handler.use(upload.single('image_url')).put(async(req, res) => {
     imageUrl = editImgUrl;
   }
 
-  console.log("themes")
-  console.log(themes)
   if (typeof themes === "string") {
-    themesToArr = themes.split(',').map(theme=> '' + theme.trim());
+    themesToArr = themes.split(',').map(theme => '' + theme.trim());
   };
 
   console.log("themes to array")
@@ -91,7 +85,7 @@ handler.use(upload.single('image_url')).put(async(req, res) => {
   
   // ensure only two or less themes exist:
   let savedThemes = [];
-  if (themesToArr.length > 2) {
+  if (themesToArr && themesToArr.length > 2) {
     for (let i = 0; i < 2; i++) {
       let theme = themesToArr[i];
       savedThemes.push(theme);
@@ -102,9 +96,9 @@ handler.use(upload.single('image_url')).put(async(req, res) => {
 
   console.log("themes saved")
   console.log(savedThemes)
-
+  
   const socialFields = {
-    website, youtube, twitter, linkedin, instagram, reddit, github
+    website, youtube, facebook, twitter, linkedin, instagram, reddit, github
   }
 
   // *** normalize urls
@@ -113,43 +107,24 @@ handler.use(upload.single('image_url')).put(async(req, res) => {
       socialFields[key] = normalize(value, { forceHttps: true });
   }
 
-  if (imageUrl !== '') {
-    if (imageFilename !== '') {
-      let currentBgImgFilename = await Profile.findOne({ user: user_id });
+  const newProfile = await new Profile({
+    // user: user_id,
+    user: id,
+    bio,
+    location,
+    themes: savedThemes,
+    backgroundImage: imageUrl,
+    backgroundImageFilename: imageFilename,
+    social: socialFields
+  });
 
-      if (currentBgImgFilename.backgroundImageFilename) {
-        await cloudinary.uploader.destroy(currentBgImgFilename.backgroundImageFilename);
-      }
-
-      profileFields = {
-        bio,
-        location,
-        themes: savedThemes,
-        backgroundImage: imageUrl,
-        backgroundImageFilename: imageFilename,
-        social: socialFields
-      }
-    }
-  }
-
-  // *** no new image to update
-  if (imageUrl === '') {
-    profileFields = {
-      bio, location, themes: savedThemes, social: socialFields
-    }
-  }
-
-  const updateProfile = await Profile.findOneAndUpdate(
-    {user: user_id},
-    {$set: profileFields},
-    { new: true, upsert: true, setDefaultsOnInsert: true }
-  );
+  const profile = await newProfile.save();
   await db.disconnect();
 
   res.status(201).json({
-    status: "Profile updated.",
+    status: "Profile created.",
     data: {
-      profile: updateProfile
+      profile
     }
   })
 });

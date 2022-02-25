@@ -75,6 +75,7 @@ const Login = () => {
             className={"fui-user"}
             onChange={onChange}
             value={email}
+            required={true}
           />
           <ControlGroup
             name={"password"}
@@ -84,6 +85,7 @@ const Login = () => {
             className={"fui-lock"}
             onChange={onChange}
             value={password}
+            required={true}
           />
           <button id="btn-reg" className="btn-primary btn-large btn-block" type="submit">
             Sign Up

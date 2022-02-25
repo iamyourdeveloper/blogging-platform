@@ -1,3 +1,4 @@
+import Cookies from "js-cookie";
 // const checkWindow = action => {
 //   return typeof window !== undefined ? action : null;
 // };
@@ -15,9 +16,11 @@
 // };
 export const authInitialState = {
   token: '',
-  isAuthenticated: global.localStorage.getItem("blog__auth") ? true : false,
+  isAuthenticated: Cookies.get("blog__token") ? true : false,
   loading: true,
-  user: global.localStorage.getItem("blog__auth") ? JSON.parse(global.localStorage.getItem("blog__auth")) : {}
+  // user: {}
+  user: Cookies.get("blog__userInfo") ? JSON.parse(Cookies.get("blog__userInfo")) : {}
+  // user: localStorage.getItem("blog__auth") ? JSON.parse(localStorage.getItem("blog__auth")) : {}
 };
 
 export const AuthReducer = (state = authInitialState, action) => {
@@ -34,6 +37,15 @@ export const AuthReducer = (state = authInitialState, action) => {
         },
       }
     case "USER_LOADED":
+      return {
+        ...state,
+        auth: {
+          user: payload,
+          isAuthenticated: true,
+          loading: false
+        }
+      }
+    case "UPDATE_USER_INFO":
       return {
         ...state,
         auth: {

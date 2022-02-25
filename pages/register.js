@@ -140,6 +140,7 @@ const Register = () => {
               className={"fui-user"}
               onChange={onChange}
               value={firstName}
+              required={true}
             />
             <ControlGroup
               name={"lastName"}
@@ -149,6 +150,7 @@ const Register = () => {
               className={"fui-user"}
               onChange={onChange}
               value={lastName}
+              required={true}
             />
             <ControlGroup
               name={"username"}
@@ -158,6 +160,7 @@ const Register = () => {
               className={"fui-user"}
               onChange={onChange}
               value={username}
+              required={true}
             />
             {/* <ControlGroupGender /> */}
             <ControlGroup
@@ -168,6 +171,7 @@ const Register = () => {
               className={"fui-user"}
               onChange={onChange}
               value={email}
+              required={true}
             />
             <ControlGroup
               name={"password"}
@@ -177,6 +181,7 @@ const Register = () => {
               className={"fui-lock"}
               onChange={onChange}
               value={password}
+              required={true}
             />
             <ControlGroup
               name={"password2"}
@@ -186,6 +191,7 @@ const Register = () => {
               className={"fui-lock"}
               onChange={onChange}
               value={password2}
+              required={true}
             />
             <ControlGroupFileUpload
               action={handleImageChange}

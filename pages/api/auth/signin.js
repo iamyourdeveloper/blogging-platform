@@ -47,7 +47,7 @@ handler.post(async (req, res) => {
 
   res.setHeader(
     "Set-Cookie",
-    cookie.serialize("token", jwtAccessToken, cookieOptions)
+    cookie.serialize("blog__token", jwtAccessToken, cookieOptions)
   );
 
   // res.cookie('token', jwtAccessToken, cookieOptions);

@@ -1,6 +1,10 @@
+require('dotenv').config();
 import jwt from 'jsonwebtoken';
 import { hash, compare } from 'bcryptjs';
 import crypto from 'crypto';
+
+let DOMAIN = process.env.DOMAIN
+let DOMAIN_LOCAL = process.env.DOMAIN_LOCAL
 
 const JWT_SECRET = process.env.JWT_SECRET;
 const NODE_ENV = process.env.NODE_ENV;
@@ -23,7 +27,7 @@ function accessTokenCookieOptions() {
       // maxAge: 300 * 1000,
       // expires: new Date(Date.now() + 1*60*60*1000), // 1hr
       // expires: new Date(Date.now() + 300*1000), // 120sec
-      // path: "/",
+      domain: NODE_ENV === 'production' ? DOMAIN : DOMAIN_LOCAL,
       expires: new Date(Date.now() + 7*24*60*60*1000), //7d
       secure: NODE_ENV === 'production' ? true : false,
       httpOnly: NODE_ENV === 'production' ? true : false,

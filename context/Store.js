@@ -1,13 +1,11 @@
 import React, { createContext, useContext, useReducer, useEffect, useMemo } from "react";
-// import { AuthReducer, initialState } from './Reducers/AuthReducer';
+import Cookies from "js-cookie";
 
 const Store = createContext();
 
 export const StoreProvider = ({ reducer, initialState, children }) => {
-  // const value = useReducer(reducer, initialState);
   const [state, dispatch] = useReducer(reducer, initialState);
   console.log("currentState");
-  // console.log(value);
   console.log(state);
 
   const contextValue = useMemo(() => {
@@ -15,46 +13,24 @@ export const StoreProvider = ({ reducer, initialState, children }) => {
   }, [state, dispatch]);
   // check if state exists in LS
   useEffect(() => {
-    let authUser = localStorage.getItem("blog__auth") ? JSON.parse(localStorage.getItem("blog__auth")) : ""
-
-    dispatch({
-      type: "USER_LOADED",
-      payload: authUser
-    });
+    // let authUser = localStorage.getItem("blog__auth") ? JSON.parse(localStorage.getItem("blog__auth")) : ""
+    let authUser = Cookies.get("blog__userInfo") ? JSON.parse(Cookies.get("blog__userInfo")) : ""
+    if (authUser) {
+      dispatch({
+        type: "USER_LOADED",
+        payload: authUser
+      });
+    }
   }, []);
   useEffect(() => {
-    // create LS value as state
-    console.log("state")
-    console.log(state)
-    console.log("initstate")
-    console.log(initialState)
+    // updated state values stored into cookie
     if (state !== initialState) {
-      localStorage.setItem("blog__auth", JSON.stringify(state.auth.user));
+      Cookies.set("blog__userInfo", JSON.stringify(state.auth.user), {expires: 7, sameSite: 'strict'});
+      // localStorage.setItem("blog__auth", JSON.stringify(state.auth.user));
     }
   }, [state]);
 
   // ------------------------------------------------
-  // const [state, dispatch] = useReducer(AuthReducer, initialState);
-  // const contextValue = useMemo(() => {
-  //   return { state, dispatch }
-  // }, [state, dispatch]);
-  // // check if state exists in LS
-  // useEffect(() => {
-  //     if (JSON.parse(localStorage.getItem("blog___state"))) {
-  //       dispatch({
-  //         type: "SET_INIT",
-  //         value: JSON.parse(localStorage.getItem("blog__state"))
-  //       });
-  //     }
-  //   }, []
-  // );
-  // useEffect(() => {
-  //   // create LS value as state
-  //   if (state !== initialState) {
-  //     localStorage.setItem("blog__state", JSON.stringify(state));
-  //   }
-  // }, [state]);
-
   // <Store.Provider value={{value}}>
   // <Store.Provider value={{state, dispatch}}>
   return (

@@ -1,13 +1,14 @@
 import {useRef, useState} from "react";
 import Head from "next/head";
 import Link from "next/link";
-import Navbar from "../components/NavBar";
 import Image from "next/image";
+import { useAppContext } from "context/Store";
+import { HiOutlineDesktopComputer, HiViewGridAdd, HiOutlineCode } from "react-icons/hi";
+import { AiOutlineArrowRight } from "react-icons/ai";
+import Navbar from "../components/NavBar";
 import { ControlGroup } from "../components/UI/FormControlGroup";
 import { Button } from "../components/UI/Button";
 import SearchBar from "../components/UI/SearchBar";
-import { AiOutlineArrowRight } from "react-icons/ai";
-import { HiOutlineDesktopComputer, HiViewGridAdd, HiOutlineCode } from "react-icons/hi";
 import GridMain from "../components/GridMain";
 import GridItem from "../components/UI/GridItem";
 import HeroGraphic from "../img/hero.svg";
@@ -31,6 +32,8 @@ import image_creditCards from "../img/credit-cards.png";
 import Footer from "../components/Footer";
 
 const Home = () => {
+  const { state, dispatch } = useAppContext();
+  const { auth } = state;
  
   return (<>
     <div className="landing hero">

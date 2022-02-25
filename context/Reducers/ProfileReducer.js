@@ -1,5 +1,5 @@
 export const profileInitialState = {
-  profileUserData: {},
+  profileData: {},
   profileStats: null, // individual profile
   profilePosts: null,
   profiles: [],
@@ -18,22 +18,48 @@ export const ProfileReducer = (state = profileInitialState, action) => {
         profiles: payload,
         loading: false
       };
-
     case "GET_PROFILE":
+      return {
+        ...state,
+        profile: {
+          profileData: payload,
+          loading: false
+        }
+      };
+    case "CREATE_PROFILE":
+      return {
+        ...state,
+        profile: {
+          profileData: payload,
+          loading: false
+        }
+        // profileData: payload.myUserData, // data.myUserData
+        // profileStats: {
+        //   profileDetails: payload.myProfileInfo, // data.myProfileInfo
+        //   profileSocials: payload.mySocialsInfo, // data.mySocialsInfo
+        //   followers: payload.profileFollowers,
+        //   following: payload.profileFollowing
+        // },
+        // profilePosts: payload.profilePosts,
+        // followingList: null,
+        // followersList: null,
+      }
     case "UPDATE_PROFILE":
       return {
         ...state,
-        profileUserData: payload.myUserData, // data.myUserData
-        profileStats: {
-          profileDetails: payload.myProfileInfo, // data.myProfileInfo
-          profileSocials: payload.mySocialsInfo, // data.mySocialsInfo
-          followers: payload.profileFollowers,
-          following: payload.profileFollowing
-        },
-        profilePosts: payload.profilePosts,
-        followingList: null,
-        followersList: null,
-        loading: false
+        profile: {
+          profileData: payload, // data.myUserData
+          profileStats: {
+            profileDetails: { ...state.profile.myProfileInfo }, // data.myProfileInfo
+            profileSocials: { ...state.profile.mySocialsInfo }, // data.mySocialsInfo
+            followers: { ...state.profile.profileFollowers },
+            following: { ...state.profile.profileFollowing }
+          },
+          profilePosts: { ...state.profile.profilePosts },
+          followingList: null,
+          followersList: null,
+          loading: false
+        }
       }
 
     case "FOLLOW_PROFILE":
@@ -63,7 +89,7 @@ export const ProfileReducer = (state = profileInitialState, action) => {
     case "CLEAR_PROFILE":
       return {
         ...state,
-        profileUserData: null,
+        profileData: null,
         profileStats: null,
         profilePosts: null,
       };
@@ -71,7 +97,7 @@ export const ProfileReducer = (state = profileInitialState, action) => {
     case "ACCOUNT_DELETED":
       return {
         ...state,
-        profileUserData: null,
+        profileData: null,
         profileStats: null,
         profilePosts: null,
         loading: false
